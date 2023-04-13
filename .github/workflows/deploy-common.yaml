@@ -24,8 +24,8 @@ jobs:
         run: cd common && npm run patch
 
       - run: cd common && npm ci
-      - run: pwd
       - run: cd common
+      - run: pwd
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
