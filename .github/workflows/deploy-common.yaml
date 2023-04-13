@@ -14,19 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: move to common
-        run: cd common
-
       - name: Install dependencies
-        run: npm install
+        run: cd common && npm install
 
       - name: Build module
-        run: npm run build
+        run: cd common && npm run build
 
       - name: Patch module
-        run: npm run patch
+        run: cd common && npm run patch
 
-      - run: npm ci
+      - run: cd common && npm ci
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
