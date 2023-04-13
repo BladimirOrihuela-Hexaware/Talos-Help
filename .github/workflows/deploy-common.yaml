@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Install dependencies
         run: cd common && npm install
@@ -20,12 +20,12 @@ jobs:
         run: cd common && npm run build
 
       - name: Patch module
-        run: cd common && npm run patch
+        run: |
+          git config --global user.name 'BladimirOrihuela-Hexaware'
+          git config --global user.email 'BladimirOrihuela-Hexaware@users.noreply.github.com'
+          git commit -am "bump commons"
+          git push
 
-      # - run: cd common && npm ci
-      # - run: cd common && npm publish --access public
-      # env:
-      #   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   publish-npm:
     needs: build
     runs-on: ubuntu-latest

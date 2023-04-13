@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "build": "npm run clean && tsc",
-    "clean": "rm -rf ./build",
-    "patch": "sh scripts/patchModule.sh"
+    "clean": "rm -rf ./build"
   },
   "keywords": [],
   "author": "ATP-MEX",
