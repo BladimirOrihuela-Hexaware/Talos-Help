@@ -13,12 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Install dependencies
-        run: cd common && npm install
 
-      - name: Update module version
-        run: cd common && npm run build
+      - name: move to common
+        run: cd common
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build module
+        run: npm run build
 
       - name: Patch module
         run: npm run patch
