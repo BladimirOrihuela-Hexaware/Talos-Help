@@ -8,4 +8,4 @@ This project is intended to redisign Talos Help tool.
 
 create a branch from `master` with format
 
-> yourName/branchName
+> yourName/branch-name
