@@ -20,9 +20,13 @@ jobs:
         run: cd common && npm run build
 
       - name: Patch module
+        run: cd common && npm version patch
+
+      - name: Commit change
         run: |
           git config --global user.name 'BladimirOrihuela-Hexaware'
           git config --global user.email 'BladimirOrihuela-Hexaware@users.noreply.github.com'
+          git add .
           git commit -am "bump commons"
           git push
 
