@@ -9,7 +9,7 @@ import { CustomError } from "../errors/custom-error";
  * If thrown error is not a CustomError instance,
  * we just send a default error
  */
-export const validateRequest = (
+export const validateRequestErrors = (
   err: Error,
   _req: Request,
   res: Response,
