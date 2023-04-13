@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - "common/**"
+    paths:
+      - "common/**"
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
       - name: Commit change
         run: |
           git add .
-          git commit -am "bump commons automated"
+          git commit -am "⬆️📦️ Bump Common module"
           git push
 
       - name: Publish module
