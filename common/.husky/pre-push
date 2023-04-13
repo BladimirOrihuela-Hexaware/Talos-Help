@@ -1,8 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-npm version patch
-git add .
-git commit -m "Patch commons module"
-echo "Exiting "
-exit 1

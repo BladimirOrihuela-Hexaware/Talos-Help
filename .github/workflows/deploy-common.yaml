@@ -1,0 +1,26 @@
+name: deploy common package
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "common/*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Update module version
+        run: npm run build
+
+      - name: Patch module
+        run: npm run patch
+
+      - run: npm ci
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
