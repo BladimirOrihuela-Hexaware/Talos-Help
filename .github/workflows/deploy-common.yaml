@@ -28,10 +28,11 @@ jobs:
       - name: Patch module
         run: cd common && npm version patch
 
+      - name: Setup git user
+        uses: fregante/setup-git-user@v1
+
       - name: Commit change
         run: |
-          git config --global user.name 'BladimirOrihuela-Hexaware'
-          git config --global user.email 'BladimirOrihuela-Hexaware@users.noreply.github.com'
           git add .
           git commit -am "bump commons automated"
           git push
