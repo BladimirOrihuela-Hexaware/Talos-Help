@@ -1,7 +1,7 @@
 {
   "name": "@atptalos/common",
   "version": "1.0.0",
-  "description": "Common package to share between Talos Help services",
+  "description": "Common package to share between Talos Help services!",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "files": [
