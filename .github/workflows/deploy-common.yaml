@@ -17,16 +17,16 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
 
-      - run: cd common && npm ci
+      - run: npm ci
 
       - name: Install dependencies
-        run: cd common && npm install
+        run: npm install
 
       - name: Build module
-        run: cd common && npm run build
+        run: npm run build
 
       - name: Patch module
-        run: cd common && npm version patch
+        run: npm version patch
 
       - name: Commit change
         run: |
@@ -37,6 +37,6 @@ jobs:
           git push
 
       - name: Publish module
-        run: cd common && npm publish --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
