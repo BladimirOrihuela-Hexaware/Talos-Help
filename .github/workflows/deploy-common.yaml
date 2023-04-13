@@ -14,10 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: cd common
-
       - name: Update module version
-        run: npm run build
+        run: cd common && npm run build
 
       - name: Patch module
         run: npm run patch
