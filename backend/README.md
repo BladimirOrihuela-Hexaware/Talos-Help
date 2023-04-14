@@ -2,10 +2,7 @@
 
 All the microservices are a NestJS application.
 
-You can find the corresponding NestJS application inside [`apps`](./apps).
-
-There is an "extra" folder named [`apps/static`](./apps/static/) which is not strictly a microservice but it is an HTTP server 
-for static content (images mainly, but it may serve html, css, js too)
+You can find the corresponding NestJS application inside `./<service name>`.
 
 ## Development
 
