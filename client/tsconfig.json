@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@common/components/*": ["./src/common/components/*"],
+      "@common/*": ["./src/common/*"],
       "@services/*": ["./src/services/*"]
     }
   },
