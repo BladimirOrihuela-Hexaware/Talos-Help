@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actions-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actions
+  template:
+    metadata:
+      labels:
+        app: actions
+    spec:
+      containers:
+        - name: actions
+          image: hexawareblad/taloshelp-actions
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: actions-srv
+spec:
+  selector:
+    app: actions
+  ports:
+    - name: actions
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

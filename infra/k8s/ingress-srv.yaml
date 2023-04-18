@@ -17,6 +17,20 @@ spec:
                 name: licensing-srv
                 port:
                   number: 3000
+          - path: /features/latest/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: features-srv
+                port:
+                  number: 3000
+          - path: /actions/latest/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: actions-srv
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
