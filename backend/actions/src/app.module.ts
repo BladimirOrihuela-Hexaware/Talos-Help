@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { LicensingController } from "./licensing.controller";
-import { LicensingService } from "./licensing.service";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 
@@ -14,7 +14,7 @@ import * as Joi from "joi";
             })
         })
     ],
-    controllers: [LicensingController],
-    providers: [LicensingService],
+    controllers: [AppController],
+    providers: [AppService],
 })
-export class LicensingModule {}
+export class AppModule {}
