@@ -7,10 +7,10 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: localhost
+    - host: taloshelp.dev
       http:
         paths:
-          - path: /api/licensing/?(.*)
+          - path: /licensing/latest/?(.*)
             pathType: Prefix
             backend:
               service:
