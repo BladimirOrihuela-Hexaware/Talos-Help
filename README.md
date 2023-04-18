@@ -30,7 +30,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 ## Match ingress hosts
 
-Open `C:\Windows\System32\drivers\etc\hosts`
+Open `C:\Windows\System32\drivers\etc\hosts` and add at the end:
 
 ```
 127.0.0.1 taloshelp.dev
