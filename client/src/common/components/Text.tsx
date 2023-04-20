@@ -2,9 +2,9 @@ import * as React from "react";
 import Typography, { TypographyProps } from "@mui/material/Typography";
 
 const variants = {
-    h1: "h1",
-    h2: "h2",
     h3: "h3",
+    h4: "h4",
+    h5: "h5",
     sub: "subtitle1",
     body: "body2",
 } as const;
