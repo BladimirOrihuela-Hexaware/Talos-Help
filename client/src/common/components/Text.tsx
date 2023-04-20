@@ -1,6 +1,4 @@
 import * as React from "react";
-import { PropsWithChildren } from "react";
-import Box from "@mui/material/Box";
 import Typography, { TypographyProps } from "@mui/material/Typography";
 
 const variants = {
