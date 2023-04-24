@@ -1,7 +1,6 @@
 import { Controller, Get, Param } from "@nestjs/common";
 import { FeaturesService } from "./features.service";
 import { ApiResponse, ApiTags, ApiParam, ApiExtraModels, getSchemaPath } from "@nestjs/swagger";
-import { Integration } from "./entities/integrations";
 import { NotFoundError, BadRequestError } from "@atptalos/common";
 import { IntegrationsDto } from "./dto/integrationsDto.dto";
 import { IntegrationsResponse, IntegrationResponse } from "./responses/integrations.res";
@@ -37,6 +36,7 @@ export class IntegrationController {
         description: "Integration Id",
         required: true,
         allowEmptyValue: false,
+        example: "genrocket",
     })
     @ApiResponse({
         status: 200,
@@ -46,8 +46,9 @@ export class IntegrationController {
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })
     getIntegration(@Param() params): IntegrationResponse {
         if (params.id === "{id}") throw new BadRequestError("Id is required");
+        const id = params.id as string;
 
-        const data = this.featuresService.getIntegration(params.id);
+        const data = this.featuresService.getIntegration(id.toLocaleLowerCase());
         if (!data) throw new NotFoundError();
         return { integration: data };
     }

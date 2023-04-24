@@ -1,5 +1,5 @@
-import { GenRocket } from "./genrocket.entity";
-import { QTest } from "./qtest.entity";
+import { GenRocket } from "../models/genrocket.entity";
+import { QTest } from "../models/qtest.entity";
 
 export type Integration = GenRocket | QTest;
 
