@@ -8,7 +8,7 @@ const variants = {
 } as const;
 
 type ButtonType = keyof typeof variants;
-type Variants = typeof variants[ButtonType];
+type Variants = (typeof variants)[ButtonType];
 
 const getButtonVariant = (type?: ButtonType): Variants => {
     if (!type) return variants.primary;
@@ -21,7 +21,7 @@ export type ButtonProps = {
     onClick: () => void;
 } & ButtonTypeMap["props"];
 
-const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
     const { text, btntype, onClick } = props;
     return (
         <MuiButton {...props} onClick={onClick} variant={getButtonVariant(btntype)}>
@@ -29,5 +29,3 @@ const Button = (props: ButtonProps) => {
         </MuiButton>
     );
 };
-
-export default Button;

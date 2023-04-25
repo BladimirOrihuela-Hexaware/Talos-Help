@@ -5,11 +5,12 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "@common/constants/colors";
-import { Text } from "@common/components/Text";
+import { Text, AppBar } from "@common/components";
 
 const Index = () => {
     return (
         <ThemeProvider theme={theme}>
+            <AppBar />
             <Text type="h3">Index.tsx</Text>
         </ThemeProvider>
     );
