@@ -1,34 +1,11 @@
 import * as React from "react";
-import {
-    styled,
-    alpha,
-    AppBar as MuiAppBar,
-    Box,
-    Toolbar,
-    IconButton,
-    InputBase,
-    Badge,
-    MenuItem,
-    InputAdornment,
-    Menu,
-} from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { styled, alpha, AppBar as MuiAppBar, Box, Toolbar, IconButton, InputBase, InputAdornment } from "@mui/material";
 import ContactMailRounded from "@mui/icons-material/ContactMailRounded";
-import { Text } from "./Text";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const Search = styled("div")(({ theme }) => ({
-    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.primary.light, 0.15),
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-    },
 }));
 
 const Shortcut = styled("kbd")(({ theme }) => ({
@@ -41,9 +18,8 @@ const Shortcut = styled("kbd")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
+    padding: theme.spacing(0.5, 1, 0.5, 1),
     "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 1),
-        // vertical padding + font size from searchIcon
         transition: theme.transitions.create("width"),
         width: "100%",
         [theme.breakpoints.up("md")]: {
@@ -52,7 +28,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export const AppBar = () => {
+interface Props {
+    toggleDrawer: () => void;
+}
+
+export const AppBar = (props: Props) => {
     const inputRef = React.useRef<null | HTMLElement>(null);
 
     React.useEffect(() => {
@@ -70,36 +50,40 @@ export const AppBar = () => {
     }, [inputRef]);
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <MuiAppBar position="static" color="transparent">
-                <Toolbar>
-                    <Text type="h4" noWrap sx={{ display: { xs: "none", sm: "block" } }}>
-                        TALOS Docs
-                    </Text>
-                    <Box sx={{ flexGrow: 1 }} />
-                    <Search>
-                        <StyledInputBase
-                            placeholder="Search documentation..."
-                            inputRef={inputRef}
-                            tabIndex={0}
-                            endAdornment={
-                                <InputAdornment position="end" color="primary">
-                                    <Shortcut>CTRL B</Shortcut>
-                                </InputAdornment>
-                            }
-                        />
-                    </Search>
-                    <IconButton
-                        size="large"
-                        aria-label="Contact us"
-                        aria-haspopup="true"
-                        onClick={() => console.log("TBD")}
-                        color="primary"
-                    >
-                        <ContactMailRounded />
-                    </IconButton>
-                </Toolbar>
-            </MuiAppBar>
-        </Box>
+        <MuiAppBar position="sticky" color="inherit">
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={props.toggleDrawer}
+                    sx={{ mr: 2, display: { sm: "none" } }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Box sx={{ flexGrow: 1 }} />
+                <Search>
+                    <StyledInputBase
+                        placeholder="Search documentation..."
+                        inputRef={inputRef}
+                        tabIndex={0}
+                        endAdornment={
+                            <InputAdornment position="end" color="primary">
+                                <Shortcut>CTRL B</Shortcut>
+                            </InputAdornment>
+                        }
+                    />
+                </Search>
+                <IconButton
+                    size="large"
+                    aria-label="Contact us"
+                    aria-haspopup="true"
+                    onClick={() => console.log("TBD")}
+                    color="primary"
+                >
+                    <ContactMailRounded />
+                </IconButton>
+            </Toolbar>
+        </MuiAppBar>
     );
 };
