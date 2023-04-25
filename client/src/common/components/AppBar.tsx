@@ -89,17 +89,15 @@ export const AppBar = () => {
                             }
                         />
                     </Search>
-                    <Box sx={{ display: { md: "none" } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="Contact us"
-                            aria-haspopup="true"
-                            onClick={() => console.log("TBD")}
-                            color="primary"
-                        >
-                            <ContactMailRounded />
-                        </IconButton>
-                    </Box>
+                    <IconButton
+                        size="large"
+                        aria-label="Contact us"
+                        aria-haspopup="true"
+                        onClick={() => console.log("TBD")}
+                        color="primary"
+                    >
+                        <ContactMailRounded />
+                    </IconButton>
                 </Toolbar>
             </MuiAppBar>
         </Box>
