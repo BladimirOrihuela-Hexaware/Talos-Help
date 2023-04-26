@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: features-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: features
+  template:
+    metadata:
+      labels:
+        app: features
+    spec:
+      containers:
+        - name: features
+          image: hexawareblad/taloshelp-features
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: features-srv
+spec:
+  selector:
+    app: features
+  ports:
+    - name: features
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

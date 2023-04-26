@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { ConfigService } from "@nestjs/config";
-import { AppModule } from "./app.module";
+import { AppModule } from "./features.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 const VERSION = "latest";

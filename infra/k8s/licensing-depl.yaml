@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: licensing-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: licensing
+  template:
+    metadata:
+      labels:
+        app: licensing
+    spec:
+      containers:
+        - name: licensing
+          image: hexawareblad/taloshelp-licensing
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: licensing-srv
+spec:
+  selector:
+    app: licensing
+  ports:
+    - name: licensing
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
