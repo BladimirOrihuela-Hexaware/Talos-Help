@@ -20,7 +20,7 @@ export class ActionsController {
     })
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })
     @ApiResponse({ status: 200, description: "List of all actions" })
-    getIntegrations(): ActionsResponse {
+    getActions(): ActionsResponse {
         const data = this.appService.getActions();
         return { Actions: data };
     }
@@ -45,7 +45,7 @@ export class ActionController {
     })
     @ApiResponse({ status: 404, description: "Action ID not found" })
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })
-    getIntegration(@Param("id") id: string): ActionResponse {
+    getAction(@Param("id") id: string): ActionResponse {
         const data = this.featuresService.getAction(id.toLocaleLowerCase());
         if (!data) throw new NotFoundError();
         return { Action: data };

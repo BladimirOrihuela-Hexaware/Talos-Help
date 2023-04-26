@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { ActionBase } from "../models/actions_base";
-import {Actions2 } from "src/models/actions";
+import {Actions_type} from "src/models/actions";
 
 export class ActionsResponse {
     @ApiProperty({ description: "List of Actions" })
@@ -9,5 +9,5 @@ export class ActionsResponse {
 
 export class ActionResponse {
     @ApiProperty({ description: "Accept schema" })
-    Action: Actions2;
+    Action: Actions_type;
 }

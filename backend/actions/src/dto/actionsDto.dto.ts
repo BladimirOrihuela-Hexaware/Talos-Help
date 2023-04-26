@@ -6,5 +6,5 @@ export class ActionsDto {
         description: "Actions list",
         example: [{ title: "Action Name", description: "Action description", isWeb: true, isMobile: true, isDesktop:true }],
     })
-    integrations: ActionBase[];
+    actions: ActionBase[];
 }
