@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Toolbar, Container, List, Box, Divider, Drawer as MuiDrawer } from "@mui/material";
 import { Text } from "./Text";
-import { DrawerWidth, Options } from "@common/constants";
+import { DrawerWidth, Option, Options } from "@common/constants";
 import { ListItem } from "./ListItem";
+import { NestedListItem } from "./NestedListItem";
 
 interface Props {
     mobileOpen: boolean;
@@ -13,9 +14,15 @@ interface Props {
 export const Drawer = (props: Props) => {
     const { mobileOpen, toggleDrawer } = props;
     const [selected, setSelected] = useState(Options[0].text);
+    const [actionsOpen, setActionsOpen] = useState(false);
 
     const selectOption = (text: string) => {
-        setSelected(text);
+        if (text !== selected) setSelected(text);
+    };
+
+    const toggleActions = (text: string) => {
+        selectOption(text);
+        setActionsOpen(!actionsOpen);
     };
 
     const drawer = (
@@ -27,9 +34,21 @@ export const Drawer = (props: Props) => {
             </Toolbar>
             <Divider />
             <List>
-                {Options.map(({ text }) => (
-                    <ListItem text={text} key={text} selected={selected === text} onClick={selectOption} />
-                ))}
+                {Options.map((option: Option) => {
+                    const { text, nested } = option;
+                    const selectItem = selected === text;
+                    if (nested)
+                        return (
+                            <NestedListItem
+                                open={actionsOpen}
+                                option={option}
+                                key={text}
+                                selected={selectItem}
+                                toggle={toggleActions}
+                            />
+                        );
+                    return <ListItem text={text} key={text} selected={selectItem} onClick={selectOption} />;
+                })}
             </List>
             <Divider />
         </div>
