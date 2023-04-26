@@ -37,7 +37,7 @@ export const Drawer = (props: Props) => {
                 {Options.map((option: Option) => {
                     const { text, nested } = option;
                     const selectItem = selected === text;
-                    if (nested)
+                    if (nested !== undefined)
                         return (
                             <NestedListItem
                                 open={actionsOpen}

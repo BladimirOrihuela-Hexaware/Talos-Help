@@ -13,7 +13,7 @@ interface Props {
 
 export const NestedListItem = (props: Props) => {
     const { option, open, selected, toggle } = props;
-    const { text } = option;
+    const { text, nested } = option;
 
     return (
         <>
@@ -27,11 +27,15 @@ export const NestedListItem = (props: Props) => {
             </MuiListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
-                    <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemText disableTypography>
-                            <Text>{text}</Text>
-                        </ListItemText>
-                    </ListItemButton>
+                    {nested!.map(({ name }) => {
+                        return (
+                            <ListItemButton sx={{ pl: 4 }} key={name}>
+                                <ListItemText disableTypography>
+                                    <Text>{name}</Text>
+                                </ListItemText>
+                            </ListItemButton>
+                        );
+                    })}
                 </List>
             </Collapse>
         </>

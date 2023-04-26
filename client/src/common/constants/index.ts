@@ -3,7 +3,9 @@ export const DrawerWidth = 240;
 export type Option = {
     text: string;
     route: string;
-    nested?: boolean;
+    nested?: {
+        name: string;
+    }[];
 };
 
 export const Options: Option[] = [
@@ -22,7 +24,7 @@ export const Options: Option[] = [
     {
         text: "Actions",
         route: "/actions",
-        nested: true,
+        nested: [{ name: "Action 1" }],
     },
     {
         text: "Renew license",
