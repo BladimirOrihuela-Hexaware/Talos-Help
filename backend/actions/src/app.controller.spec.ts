@@ -18,7 +18,7 @@ describe("Actions Controller", () => {
     it("should return a formated list of integrations", () => {
         const { Actions } = icontroller.getActions();
         expect(Actions).toHaveLength(1);
-        expect(Actions[0]).toMatchObject({ ActionName: "Accept", description: "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
+        expect(Actions[0]).toMatchObject({ ActionName: "Alert Accept", description: "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
         isWeb:true, isMobile: true, isDesktop: false});
     });
 });

@@ -28,7 +28,7 @@ export class ActionsController {
 
 @Controller("action")
 export class ActionController {
-    constructor(private readonly featuresService: AppService) {}
+    constructor(private readonly appService: AppService) {}
 
     @Get(":id")
     @ApiTags("action")
@@ -37,7 +37,7 @@ export class ActionController {
         description: "Action Id",
         required: true,
         allowEmptyValue: false,
-        example: "accept",
+        example: "alertaccept",
     })
     @ApiResponse({
         status: 200,
@@ -46,7 +46,7 @@ export class ActionController {
     @ApiResponse({ status: 404, description: "Action ID not found" })
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })
     getAction(@Param("id") id: string): ActionResponse {
-        const data = this.featuresService.getAction(id.toLocaleLowerCase());
+        const data = this.appService.getAction(id.toLocaleLowerCase());
         if (!data) throw new NotFoundError();
         return { Action: data };
     }

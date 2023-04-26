@@ -1,7 +1,7 @@
 import { Action } from "../models/actions.entity";
 
-export const AcceptData: Action = {
-    actionName:"Accept",
+export const AlertAcceptData: Action = {
+    actionName:"Alert Accept",
     description: 
         "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
     isWeb: true,

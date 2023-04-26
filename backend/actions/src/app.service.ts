@@ -4,7 +4,7 @@ import { ActionBase } from "./models/actions_base";
 import * as data from "./data";
 
 const actions: Actions = {
-    accept: data.AcceptData
+    alertaccept : data.AlertAcceptData
 };
 
 @Injectable()

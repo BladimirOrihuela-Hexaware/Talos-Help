@@ -1,1 +1,1 @@
-export { AcceptData } from "./action-data";
+export { AlertAcceptData } from "./action-data";
