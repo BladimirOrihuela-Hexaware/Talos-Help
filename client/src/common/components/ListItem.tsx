@@ -11,7 +11,7 @@ interface Props {
 export const ListItem = (props: Props) => {
     const { text, selected, onClick } = props;
     return (
-        <MuiListItem key={text} disablePadding>
+        <MuiListItem disablePadding>
             <ListItemButton selected={selected} onClick={() => onClick(text)}>
                 <ListItemText disableTypography>
                     <Text>{text}</Text>

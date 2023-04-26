@@ -17,7 +17,7 @@ export const NestedListItem = (props: Props) => {
 
     return (
         <>
-            <MuiListItem key={text} disablePadding>
+            <MuiListItem disablePadding>
                 <ListItemButton selected={selected} onClick={() => toggle(text)}>
                     <ListItemText disableTypography>
                         <Text>{text}</Text>
