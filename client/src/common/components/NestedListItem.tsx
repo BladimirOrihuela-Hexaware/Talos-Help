@@ -3,6 +3,7 @@ import { ListItem as MuiListItem, Collapse, List, ListItemButton, ListItemText }
 import { Text } from "./Text";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Option } from "@common/constants";
+import NextLink from "next/link";
 
 interface Props {
     option: Option;
@@ -14,14 +15,16 @@ interface Props {
 
 export const NestedListItem = (props: Props) => {
     const { option, open, selectedItem, toggle, selectOption } = props;
-    const { text, nested } = option;
+    const { text, nested, route } = option;
 
     return (
         <>
             <MuiListItem disablePadding>
                 <ListItemButton selected={selectedItem === text} onClick={() => toggle(text)}>
                     <ListItemText disableTypography>
-                        <Text>{text}</Text>
+                        <NextLink href={route}>
+                            <Text>{text}</Text>
+                        </NextLink>
                     </ListItemText>
                     {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
                 </ListItemButton>
@@ -37,7 +40,9 @@ export const NestedListItem = (props: Props) => {
                                 onClick={() => selectOption(name)}
                             >
                                 <ListItemText disableTypography>
-                                    <Text>{name}</Text>
+                                    <NextLink href={`${route}/${name}`}>
+                                        <Text>{name}</Text>
+                                    </NextLink>
                                 </ListItemText>
                             </ListItemButton>
                         );

@@ -47,7 +47,7 @@ export const Drawer = (props: Props) => {
                                 selectOption={selectOption}
                             />
                         );
-                    return <ListItem text={text} key={text} selectedItem={selected} onClick={selectOption} />;
+                    return <ListItem option={option} key={text} selectedItem={selected} onClick={selectOption} />;
                 })}
             </List>
             <Divider />
