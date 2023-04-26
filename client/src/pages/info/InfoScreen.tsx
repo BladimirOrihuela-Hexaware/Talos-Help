@@ -1,12 +1,12 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { MainScreen } from "src/pages/info";
+import { ScreenWrapper } from "@common/components";
 
-export const Prueba = () => {
+export const InfoScreen = () => {
     return (
-        <MainScreen>
+        <ScreenWrapper>
             <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                Blad ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at
                 ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis
                 convallis tellus id interdum velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
@@ -68,6 +68,6 @@ export const Prueba = () => {
                 nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus
                 vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
             </Typography>
-        </MainScreen>
+        </ScreenWrapper>
     );
 };

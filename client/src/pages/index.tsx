@@ -1,18 +1,9 @@
 import React from "react";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import { ThemeProvider } from "@emotion/react";
-import { theme } from "@common/constants/colors";
-import { Prueba } from "@common/components/Prueba";
+
+import { InfoScreen } from "./info/InfoScreen";
 
 const Index = () => {
-    return (
-        <ThemeProvider theme={theme}>
-            <Prueba />
-        </ThemeProvider>
-    );
+    return <InfoScreen />;
 };
 
 export default Index;
