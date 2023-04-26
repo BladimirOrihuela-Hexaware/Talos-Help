@@ -1,17 +1,8 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
-import Toolbar from "@mui/material/Toolbar";
+import { useState } from "react";
+import { Toolbar, Container, List, Box, Divider, Drawer as MuiDrawer } from "@mui/material";
 import { Text } from "./Text";
-import { DrawerWidth } from "@common/constants";
+import { DrawerWidth, Options } from "@common/constants";
+import { ListItem } from "./ListItem";
 
 interface Props {
     mobileOpen: boolean;
@@ -19,8 +10,14 @@ interface Props {
     children: React.ReactNode;
 }
 
-export const CustomDrawer = (props: Props) => {
+export const Drawer = (props: Props) => {
     const { mobileOpen, toggleDrawer } = props;
+    const [selected, setSelected] = useState(Options[0].text);
+
+    const selectOption = (text: string) => {
+        setSelected(text);
+    };
+
     const drawer = (
         <div>
             <Toolbar>
@@ -30,26 +27,11 @@ export const CustomDrawer = (props: Props) => {
             </Toolbar>
             <Divider />
             <List>
-                {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
+                {Options.map(({ text }) => (
+                    <ListItem text={text} key={text} selected={selected === text} onClick={selectOption} />
                 ))}
             </List>
             <Divider />
-            <List>
-                {["All mail", "Trash", "Spam"].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
         </div>
     );
 
@@ -60,7 +42,7 @@ export const CustomDrawer = (props: Props) => {
                 sx={{ width: { sm: DrawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
             >
-                <Drawer
+                <MuiDrawer
                     variant="temporary"
                     open={mobileOpen}
                     onClose={toggleDrawer}
@@ -73,8 +55,8 @@ export const CustomDrawer = (props: Props) => {
                     }}
                 >
                     {drawer}
-                </Drawer>
-                <Drawer
+                </MuiDrawer>
+                <MuiDrawer
                     variant="permanent"
                     sx={{
                         display: { xs: "none", sm: "block" },
@@ -83,7 +65,7 @@ export const CustomDrawer = (props: Props) => {
                     open
                 >
                     {drawer}
-                </Drawer>
+                </MuiDrawer>
             </Box>
             <Box component="main" sx={{ width: { sm: `calc(100% - ${DrawerWidth}px)` } }}>
                 {props.children}
