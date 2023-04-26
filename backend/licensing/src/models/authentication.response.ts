@@ -8,6 +8,10 @@ export class AuthenticationResponse {
     @ApiProperty({ description: "True if authentication was successful, false otherwise" })
     success: boolean;
 
-    @ApiProperty({ description: "Specifies the reason for unsuccessful authentication", enum: AuthenticationErrorCode, required: false })
+    @ApiProperty({
+        description: "Specifies the reason for unsuccessful authentication",
+        enum: AuthenticationErrorCode,
+        required: false,
+    })
     errCode?: AuthenticationErrorCode;
 }

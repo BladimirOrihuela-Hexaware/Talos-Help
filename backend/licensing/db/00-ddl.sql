@@ -39,10 +39,12 @@ CREATE INDEX license_id_active_idx ON license(id, active);
 CREATE TABLE license_usage(
     license_id          uuid NOT NULL,
     client_id           VARCHAR NOT NULL,
-    last_ka_received_at TIMESTAMP NOT NULL,
+    last_ka_received_at TIMESTAMPTZ NOT NULL,
     PRIMARY KEY(license_id, client_id)
 );
 COMMENT ON TABLE license_usage IS 'stores the current "locks" acquired by clients using a specific license';
 COMMENT ON COLUMN license_usage.client_id IS 'unique identifier for the machine that acquired the lock on the license';
 COMMENT ON COLUMN license_usage.last_ka_received_at IS 'timestamp when the last keep-active message was received from client';
+CREATE INDEX license_usage_license_id_idx ON license_usage(license_id);
+-- index (license_id, client_id) should be automatically created since it is a primary key, right?
 -- in theory all client_ids should have same length (so char type is more suitable) but since it is unknown, varchar is used

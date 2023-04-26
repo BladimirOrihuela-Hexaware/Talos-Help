@@ -3,17 +3,19 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { LicensingModule } from "./licensing.module";
+import { NestExpressApplication } from "@nestjs/platform-express";
 
 const VERSION = "latest";
 const GLOBAL_PREFIX = `/licensing/${VERSION}`;
 
 async function bootstrap() {
-    const app = await NestFactory.create(LicensingModule);
+    const app = await NestFactory.create<NestExpressApplication>(LicensingModule);
     const configService = app.get(ConfigService);
 
     // global configuration for application
     app.useGlobalPipes(new ValidationPipe())
-        .setGlobalPrefix(GLOBAL_PREFIX);
+        .setGlobalPrefix(GLOBAL_PREFIX)
+        .useBodyParser("text"); // text parser is required for text/plain messages (the ones using PGP)
 
     // OpenAPI config (only for dev environment)
     if (configService.get("NODE_ENV", "development") === "development") {

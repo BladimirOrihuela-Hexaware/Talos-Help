@@ -29,7 +29,6 @@ With this licensing model, we’re going to be able to (just a few things):
 
 - and more… (probably)
 
-
 ### Fixing the “dead client” problem
 
 Why not simply acquiring the lock when TALOS is opened and releasing it when TALOS is closed?
@@ -58,3 +57,40 @@ But they're somewhat easy to implement (if code is SOLID), for example:
 - We could simply change the inner implementation of whichever interface is used to validate the license.
 
 - To send keep active messages we could create another daemon thread to send these messages every `x` seconds.
+
+## Security measures
+
+Non-repudation is achieved by signing all request bodies with a private PGP key only known by TALOS client 
+(public key is known by the microservice).
+Ideally, the public key is symmetrically encrypted (with a good password, maybe one randomly selected at installation time) in
+TALOS client to prevent anyone (but TALOS itself) from viewing the key.
+
+To prevent replay attacks, body should contain a timestamp (property `ts`). Request should be dropped (rejected) if the server receives
+it `x` seconds (30s) after the timestamp.
+
+Request content type should be `text/plain`.
+
+Example:
+
+```json
+...other HTTP headers...
+Content-Type: text/plain
+...other HTTP headers...
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+{"ts":1682467383084,...remainingProperties}
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEwNExhwwk5Igv6yDwMrLeLLfshxEFAmRHR8EACgkQMrLeLLfs
+hxFRDQf/WjRA9gcobS/wlWaobnidk9E54QO0cKlbXqrcVKGO1L8Pdt+lwXaxxMrr
+B7GX+QmlJolKUt5Gb6mXvTgMQ9ME2zphkj6LKh0Zwn8Z0RerKBFPE7x5007sIg5a
+5Aw6sgYLjtza8kJMiMSDHH3JxQK0R+hqCBFzqS4pzGRXUE+hyqf0cf/9SEU57cJo
+N87JVPjFsbBBdcO2s44I+E49Hrakm4wxuwrUEUcTDvwlYhyvAJ41svMhZz6TAUKm
+eXaJPaPKjO9hWAtgfh53Yl6SWJzp/WwMfcwcvAn/f4fYepIS7hoNBRXutyI7qtIv
+kYY9HpdJQVB40mZ6bdJQAfMF8Q4Lnw==
+=yYZ3
+-----END PGP SIGNATURE-----
+```

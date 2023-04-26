@@ -12,7 +12,7 @@ export class JWTModuleConfigService implements JwtOptionsFactory {
             secretOrPrivateKey: this.configService.get("JWT_PRIVATE_KEY"),
             signOptions: {
                 expiresIn: this.configService.get("JWT_EXP"),
-            }
-        }
+            },
+        };
     }
 }
