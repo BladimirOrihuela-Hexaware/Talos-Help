@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
+import { ActionController,ActionsController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
@@ -14,7 +14,7 @@ import * as Joi from "joi";
             })
         })
     ],
-    controllers: [AppController],
+    controllers: [ ActionController,ActionsController],
     providers: [AppService],
 })
 export class AppModule {}
