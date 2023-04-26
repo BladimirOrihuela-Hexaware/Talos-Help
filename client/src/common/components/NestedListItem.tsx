@@ -6,19 +6,20 @@ import { Option } from "@common/constants";
 
 interface Props {
     option: Option;
-    selected: boolean;
+    selectedItem: string;
     toggle: (text: string) => void;
+    selectOption: (text: string) => void;
     open: boolean;
 }
 
 export const NestedListItem = (props: Props) => {
-    const { option, open, selected, toggle } = props;
+    const { option, open, selectedItem, toggle, selectOption } = props;
     const { text, nested } = option;
 
     return (
         <>
             <MuiListItem disablePadding>
-                <ListItemButton selected={selected} onClick={() => toggle(text)}>
+                <ListItemButton selected={selectedItem === text} onClick={() => toggle(text)}>
                     <ListItemText disableTypography>
                         <Text>{text}</Text>
                     </ListItemText>
@@ -29,7 +30,12 @@ export const NestedListItem = (props: Props) => {
                 <List>
                     {nested!.map(({ name }) => {
                         return (
-                            <ListItemButton sx={{ pl: 4 }} key={name}>
+                            <ListItemButton
+                                selected={selectedItem === name}
+                                sx={{ pl: 4 }}
+                                key={name}
+                                onClick={() => selectOption(name)}
+                            >
                                 <ListItemText disableTypography>
                                     <Text>{name}</Text>
                                 </ListItemText>

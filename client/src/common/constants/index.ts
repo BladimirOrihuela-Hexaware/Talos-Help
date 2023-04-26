@@ -24,7 +24,14 @@ export const Options: Option[] = [
     {
         text: "Actions",
         route: "/actions",
-        nested: [{ name: "Action 1" }],
+        nested: [
+            { name: "Action 1" },
+            { name: "Action 2" },
+            { name: "Action 33" },
+            { name: "Action 4" },
+            { name: "Action 5" },
+            { name: "Action 6" },
+        ],
     },
     {
         text: "Renew license",

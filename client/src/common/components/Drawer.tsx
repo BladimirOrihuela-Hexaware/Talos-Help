@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Toolbar, Container, List, Box, Divider, Drawer as MuiDrawer } from "@mui/material";
+import { Toolbar, List, Box, Divider, Drawer as MuiDrawer } from "@mui/material";
 import { Text } from "./Text";
 import { DrawerWidth, Option, Options } from "@common/constants";
 import { ListItem } from "./ListItem";
@@ -36,18 +36,18 @@ export const Drawer = (props: Props) => {
             <List>
                 {Options.map((option: Option) => {
                     const { text, nested } = option;
-                    const selectItem = selected === text;
                     if (nested !== undefined)
                         return (
                             <NestedListItem
                                 open={actionsOpen}
                                 option={option}
                                 key={text}
-                                selected={selectItem}
+                                selectedItem={selected}
                                 toggle={toggleActions}
+                                selectOption={selectOption}
                             />
                         );
-                    return <ListItem text={text} key={text} selected={selectItem} onClick={selectOption} />;
+                    return <ListItem text={text} key={text} selectedItem={selected} onClick={selectOption} />;
                 })}
             </List>
             <Divider />

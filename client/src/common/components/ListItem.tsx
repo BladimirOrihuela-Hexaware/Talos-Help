@@ -4,15 +4,15 @@ import { Text } from "./Text";
 
 interface Props {
     text: string;
-    selected: boolean;
+    selectedItem: string;
     onClick: (text: string) => void;
 }
 
 export const ListItem = (props: Props) => {
-    const { text, selected, onClick } = props;
+    const { text, selectedItem, onClick } = props;
     return (
         <MuiListItem disablePadding>
-            <ListItemButton selected={selected} onClick={() => onClick(text)}>
+            <ListItemButton selected={selectedItem === text} onClick={() => onClick(text)}>
                 <ListItemText disableTypography>
                     <Text>{text}</Text>
                 </ListItemText>
