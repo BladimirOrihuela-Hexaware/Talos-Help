@@ -1,4 +1,4 @@
-import { Action } from "../models/actions.entity";
+import { Action } from "./action.entity";
 
 export type ActionsType = Action;
 

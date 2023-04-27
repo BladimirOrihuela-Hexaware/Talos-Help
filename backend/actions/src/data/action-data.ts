@@ -1,4 +1,4 @@
-import { Action } from "../models/actions.entity";
+import { Action } from "../models/action.entity";
 
 export const AlertAcceptData: Action = {
     actionName:"Alert Accept",
