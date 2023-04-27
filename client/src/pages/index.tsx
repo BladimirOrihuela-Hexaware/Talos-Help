@@ -1,9 +1,9 @@
 import React from "react";
 
-import { InfoScreen } from "./info/InfoScreen";
+import { ScreenWrapper } from "@common/components";
 
 const Index = () => {
-    return <InfoScreen />;
+    return <ScreenWrapper>Texto</ScreenWrapper>;
 };
 
 export default Index;
