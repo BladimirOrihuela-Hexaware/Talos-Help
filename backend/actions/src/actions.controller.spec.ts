@@ -1,6 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ActionController,ActionsController } from "./app.controller";
-import { AppService } from "./app.service";
+import { ActionsController } from "./actions.controller";
+import { ActionController } from "./action.controller"
+import { ActionService } from "./actions.service";
 import { NotFoundError } from "@atptalos/common";
 
 
@@ -9,35 +10,35 @@ describe("Actions Controller", () => {
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
             controllers: [ActionsController],
-            providers: [AppService],
+            providers: [ActionService],
         }).compile();
 
         icontroller = app.get<ActionsController>(ActionsController);
     });
 
-    it("should return a formated list of integrations", () => {
+    it("should return a formated list of Actions", () => {
         const { Actions } = icontroller.getActions();
         expect(Actions).toHaveLength(1);
-        expect(Actions[0]).toMatchObject({ ActionName: "Alert Accept", description: "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
+        expect(Actions[0]).toMatchObject({ actionName: "Alert Accept", description: "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
         isWeb:true, isMobile: true, isDesktop: false});
     });
 });
 
 
-describe("Integration Controller", () => {
+describe("Action Controller", () => {
     let icontroller: ActionController;
     beforeEach(async () => {
         const app: TestingModule = await Test.createTestingModule({
-            controllers: [ActionsController],
-            providers: [AppService],
+            controllers: [ActionController],
+            providers: [ActionService],
         }).compile();
 
         icontroller = app.get<ActionController>(ActionController);
     });
 
-    it("should return a found integration", () => {
+    it("should return a found action", () => {
         const { Action } = icontroller.getAction("accept");
-        expect(Action).toMatchObject({ title: "Accept", logo: "genrocket logo.png" });
+        expect(Action).toMatchObject({ actionName: "Accept", description: "Clicks on the 'OK' button as soon as any pop up window / alert appears." });
     });
 
     it("should return not found error", () => {

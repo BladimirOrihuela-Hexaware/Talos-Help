@@ -1,6 +1,6 @@
-import { Actions,Actions_type } from "./models/actions";
+import { Actions,ActionsType } from "./models/actions";
 import { Injectable } from "@nestjs/common";
-import { ActionBase } from "./models/actions_base";
+import { ActionBase } from "./models/actions_base.entity";
 import * as data from "./data";
 
 const actions: Actions = {
@@ -8,8 +8,8 @@ const actions: Actions = {
 };
 
 @Injectable()
-export class AppService {
-    getAction(id: string): Actions_type {
+export class ActionService {
+    getAction(id: string): ActionsType {
         return actions[id];
     }
     getActions(): ActionBase[] {

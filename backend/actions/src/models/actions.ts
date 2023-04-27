@@ -1,7 +1,7 @@
 import { Action } from "../models/actions.entity";
 
-export type Actions_type = Action;
+export type ActionsType = Action;
 
-export interface Actions {
-    [id: string]: Actions_type;
+export class Actions {
+    [id: string]: ActionsType;
 }
