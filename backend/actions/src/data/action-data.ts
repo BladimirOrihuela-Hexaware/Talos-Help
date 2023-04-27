@@ -7,33 +7,33 @@ export const AlertAcceptData: Action = {
     isWeb: true,
     isMobile: true,
     isDesktop: false,
-    panelTop:{
-        panelType:"information",
-        desc:
+    message:{
+        messageType:"information",
+        description:
 			"An alert/pop up is a small message box which appears on screen to give the user some information or notification."
     },
     parameters:[
 		{
 			title:"Value",
-			desc:"Not Required"
+			description:"Not Required"
 		},{		
 			title:"Locator Type",
-			desc:"Not Applicable",
+			description:"Not Applicable",
 		},{	
 			title:"Locator Value",
-			desc:"Not Applicable",
+			description:"Not Applicable",
 		},{	
 			title:"Known Issue",
-			desc:"Not Applicable"		
+			description:"Not Applicable"		
 		}],
         example:{
-            desc:
+            description:
             "In the following image shows the example of how to use the Alert Accept Action in the step #5 of the Test Case example.",
             img:""
         },
-        panelBottom:{
-            panelType:"successful",
-            desc:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
+        messageWithTCFile:{
+            messageType:"successful",
+            description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
             TCfile:"Path for the Test Case.stmtc"
         }
 };

@@ -4,11 +4,11 @@ import { Parameter } from "./parameters";
 
 export class Action extends ActionBase {
     @ApiProperty({required:false})
-    panelTop:{ panelType: string; desc: string};
+    message:{ messageType: string; description: string};
     @ApiProperty({required:true})
     parameters: Parameter[];
     @ApiProperty({required:true})
-    example: {desc: string; img:string};
+    example: {description: string; img:string};
     @ApiProperty({required:false})
-    panelBottom: {panelType: string; desc: string; TCfile: string};
+    messageWithTCFile: {messageType: string; description: string; TCfile: string};
 }
