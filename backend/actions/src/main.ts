@@ -1,12 +1,12 @@
 import { NestFactory } from "@nestjs/core";
 import { ConfigService } from "@nestjs/config";
-import { AppModule } from "./app.module";
+import { ActionModule } from "./actions.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 const VERSION = "latest";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(ActionModule);
     const configService = app.get(ConfigService);
 
     // set API version
