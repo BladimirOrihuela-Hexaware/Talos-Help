@@ -10,7 +10,7 @@ const variants = {
 } as const;
 
 type TextType = keyof typeof variants;
-type Variant = typeof variants[TextType];
+type Variant = (typeof variants)[TextType];
 
 const getTextVariant = (type?: TextType): Variant => {
     if (!type) return variants.body;
@@ -23,7 +23,7 @@ type TextProps = {
 
 export const Text = (props: TextProps) => {
     return (
-        <Typography {...props} variant={getTextVariant(props.type)}>
+        <Typography {...props} variant={getTextVariant(props.type)} color="primary">
             {props.children}
         </Typography>
     );
