@@ -1,0 +1,38 @@
+name: Test Licensing Service
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "backend/licensing/**"
+
+jobs:
+  Run-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: cd backend/licensing && npm install
+
+      - name: execute tests
+        run: cd backend/licensing && npm run test
+
+  Build:
+    needs: Run-Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: cd backend/licensing && npm install
+
+      - name: trigger Build
+        run: cd backend/licensing && npm run build
