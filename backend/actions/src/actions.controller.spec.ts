@@ -17,7 +17,7 @@ describe("Actions Controller", () => {
 
     it("should return a formated list of Actions", () => {
         const { Actions } = icontroller.getActions();
-        expect(Actions).toHaveLength(1);
+        expect(Actions).toHaveLength(2);
         expect(Actions[0]).toMatchObject({
             actionName: "Alert Accept",
             description: "Clicks on the 'OK' button as soon as any pop up window / alert appears.",
