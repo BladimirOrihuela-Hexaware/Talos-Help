@@ -1,0 +1,30 @@
+name: Test Actions Service
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "backend/actions/**"
+
+jobs:
+  Run-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Dependencies
+        run: cd backend/actions && npm install
+
+      - name: execute tests
+        run: cd backend/actions && npm run test
+
+  Build:
+    needs: Run-Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: trigger Build
+        run: cd backend/actions && npm run build
