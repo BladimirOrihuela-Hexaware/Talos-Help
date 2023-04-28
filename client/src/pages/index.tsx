@@ -1,9 +1,10 @@
-import React from "react";
+"use client";
 
-import { ScreenWrapper } from "@common/components";
+import React from "react";
+import ScreenWrapper from "@services/navigation/components/ScreenWrapper";
 
 const Index = () => {
-    return <ScreenWrapper>Texto</ScreenWrapper>;
+    return <ScreenWrapper>Index</ScreenWrapper>;
 };
 
 export default Index;

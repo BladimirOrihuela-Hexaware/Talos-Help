@@ -1,8 +1,10 @@
 export const DrawerWidth = 240;
 
+export type Routes = "/" | "/info" | "/clouds" | "/integrations" | "/actions" | "/license" | `/action/${string}`;
+
 export type Option = {
     text: string;
-    route: string;
+    route: Routes;
     nested?: {
         name: string;
     }[];
@@ -24,14 +26,7 @@ export const Options: Option[] = [
     {
         text: "Actions",
         route: "/actions",
-        nested: [
-            { name: "Action 1" },
-            { name: "Action 2" },
-            { name: "Action 33" },
-            { name: "Action 4" },
-            { name: "Action 5" },
-            { name: "Action 6" },
-        ],
+        nested: [{ name: "TypeAction" }, { name: "WaitForCondition" }, { name: "Navigate" }],
     },
     {
         text: "Renew license",

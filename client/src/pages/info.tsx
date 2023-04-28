@@ -1,4 +1,5 @@
-import { ScreenWrapper, Text } from "@common/components";
+import { Text } from "@common/components";
+import ScreenWrapper from "@services/navigation/components/ScreenWrapper";
 import React from "react";
 
 const InfoScreen = () => {

@@ -2,14 +2,14 @@ import React from "react";
 import { ListItem as MuiListItem, Collapse, List, ListItemButton, ListItemText } from "@mui/material";
 import { Text } from "./Text";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { Option } from "@common/constants";
+import { Option, Routes } from "@common/constants";
 import NextLink from "next/link";
 
 interface Props {
     option: Option;
-    selectedItem: string;
-    toggle: (text: string) => void;
-    selectOption: (text: string) => void;
+    selectedItem: Routes;
+    toggle: (text: Routes) => void;
+    selectOption: (text: Routes) => void;
     open: boolean;
 }
 
@@ -20,11 +20,14 @@ export const NestedListItem = (props: Props) => {
     return (
         <>
             <MuiListItem disablePadding>
-                <ListItemButton selected={selectedItem === text} onClick={() => toggle(text)}>
+                <ListItemButton
+                    selected={selectedItem === route}
+                    onClick={() => toggle(route)}
+                    href={route}
+                    LinkComponent={NextLink}
+                >
                     <ListItemText disableTypography>
-                        <NextLink href={route}>
-                            <Text>{text}</Text>
-                        </NextLink>
+                        <Text>{text}</Text>
                     </ListItemText>
                     {open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
                 </ListItemButton>
@@ -32,17 +35,18 @@ export const NestedListItem = (props: Props) => {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
                     {nested!.map(({ name }) => {
+                        const _route = `/action/${name}` as Routes;
                         return (
                             <ListItemButton
-                                selected={selectedItem === name}
+                                selected={selectedItem === _route}
                                 sx={{ pl: 4 }}
                                 key={name}
-                                onClick={() => selectOption(name)}
+                                href={_route}
+                                LinkComponent={NextLink}
+                                onClick={() => selectOption(_route)}
                             >
                                 <ListItemText disableTypography>
-                                    <NextLink href={`${route}/${name}`}>
-                                        <Text>{name}</Text>
-                                    </NextLink>
+                                    <Text>{name}</Text>
                                 </ListItemText>
                             </ListItemButton>
                         );

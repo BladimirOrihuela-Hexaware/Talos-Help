@@ -3,3 +3,4 @@ node_modules
 # ignore all .env and .env.prod files
 **/.env
 **/.env.prod
+**/.vscode/settings.json

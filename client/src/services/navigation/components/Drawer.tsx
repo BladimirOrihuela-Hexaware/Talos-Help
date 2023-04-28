@@ -1,32 +1,40 @@
 import { useState } from "react";
 import { Toolbar, List, Box, Divider, Drawer as MuiDrawer } from "@mui/material";
-import { Text } from "./Text";
-import { DrawerWidth, Option, Options } from "@common/constants";
-import { ListItem } from "./ListItem";
-import { NestedListItem } from "./NestedListItem";
+import { Text, NestedListItem, ListItem } from "@common/components";
+import { DrawerWidth, Option, Options, Routes } from "@common/constants";
+import { RootState, AppDispatch } from "@services/store";
+import { connect } from "react-redux";
+import { getSelectedRoute, isToggleOpen } from "@services/navigation/selector";
+import { actions } from "@services/navigation/slicer";
 
 interface Props {
     mobileOpen: boolean;
     toggleDrawer: () => void;
     children: React.ReactNode;
+    selectedRoute: Routes;
+    updateRoute: (r: Routes) => void;
+    toggleNested: () => void;
+    isOpen: boolean;
 }
 
-export const Drawer = (props: Props) => {
-    const { mobileOpen, toggleDrawer } = props;
-    const [selected, setSelected] = useState(Options[0].text);
-    const [actionsOpen, setActionsOpen] = useState(false);
+const Drawer = (props: Props) => {
+    const { mobileOpen, toggleDrawer, selectedRoute, updateRoute, toggleNested, isOpen } = props;
+    const [selected, setSelected] = useState(selectedRoute);
 
-    const selectOption = (text: string) => {
-        if (text !== selected) setSelected(text);
+    const selectOption = (route: Routes) => {
+        if (route !== selected) {
+            updateRoute(route);
+            setSelected(route);
+        }
     };
 
-    const toggleActions = (text: string) => {
-        selectOption(text);
-        setActionsOpen(!actionsOpen);
+    const toggleActions = (route: Routes) => {
+        selectOption(route);
+        toggleNested();
     };
 
     const drawer = (
-        <div>
+        <>
             <Toolbar>
                 <Text type="h4" noWrap sx={{ display: { sm: "block" } }}>
                     TALOS Docs
@@ -39,7 +47,7 @@ export const Drawer = (props: Props) => {
                     if (nested !== undefined)
                         return (
                             <NestedListItem
-                                open={actionsOpen}
+                                open={isOpen}
                                 option={option}
                                 key={text}
                                 selectedItem={selected}
@@ -51,7 +59,7 @@ export const Drawer = (props: Props) => {
                 })}
             </List>
             <Divider />
-        </div>
+        </>
     );
 
     return (
@@ -92,3 +100,19 @@ export const Drawer = (props: Props) => {
         </Box>
     );
 };
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        selectedRoute: getSelectedRoute(state),
+        isOpen: isToggleOpen(state),
+    };
+};
+
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        updateRoute: (route: Routes) => dispatch(actions.navigateTo(route)),
+        toggleNested: () => dispatch(actions.toggleActions()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drawer);
