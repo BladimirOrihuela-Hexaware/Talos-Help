@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { getSelectedRoute, isToggleOpen } from "@services/navigation/selector";
 import { actions } from "@services/navigation/slicer";
 
-interface Props {
+export interface Props {
     mobileOpen: boolean;
     toggleDrawer: () => void;
     children: React.ReactNode;
@@ -69,20 +69,22 @@ const Drawer = (props: Props) => {
                 sx={{ width: { sm: DrawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
             >
-                <MuiDrawer
-                    variant="temporary"
-                    open={mobileOpen}
-                    onClose={toggleDrawer}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                        display: { xs: "block", sm: "none" },
-                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: DrawerWidth },
-                    }}
-                >
-                    {drawer}
-                </MuiDrawer>
+                {mobileOpen && (
+                    <MuiDrawer
+                        variant="temporary"
+                        open={mobileOpen}
+                        onClose={toggleDrawer}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                        sx={{
+                            display: { xs: "block", sm: "none" },
+                            "& .MuiDrawer-paper": { boxSizing: "border-box", width: DrawerWidth },
+                        }}
+                    >
+                        {drawer}
+                    </MuiDrawer>
+                )}
                 <MuiDrawer
                     variant="permanent"
                     sx={{
