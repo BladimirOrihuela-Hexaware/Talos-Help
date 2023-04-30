@@ -109,6 +109,36 @@ export class LicensingService {
     getLicenseById(id: string) {
         throw new Error("Unimplemented!");
     }
+
+    /**
+     * 
+     * @param email user email
+     * @returns true if that email is authorized to generate licenses, false otherwise
+     */
+    async canGenerateLicense(email: string): Promise<boolean> {
+        // TODO query database, return true if email is found in `generator` database
+        return false;
+    }
+
+    /**
+     * 
+     * @param email generator's email
+     * @returns generator's information or null if no generator is associated with that email
+     */
+    async generatorInfo(email: string): Promise<object> {
+        // TODO query database and retrieve generator info
+        return {};
+    }
+
+    /**
+     * Generates a new license
+     * @param generatorId id of the person that generates this license
+     * @returns the license ID
+     */
+    async generateLicense(generatorId: string): Promise<string> {
+        // TODO insert to database and retrieve license id
+        return "";
+    }
 }
 
 interface OldLicenseModel {
