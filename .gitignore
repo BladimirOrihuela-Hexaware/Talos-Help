@@ -1,5 +1,9 @@
 node_modules
 
+# ignore IDE config
+**/.idea/
+**/.vscode/
+
 # ignore all .env and .env.prod files
 **/.env
 **/.env.prod

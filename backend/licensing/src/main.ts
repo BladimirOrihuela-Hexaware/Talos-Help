@@ -1,17 +1,21 @@
-import { NestFactory } from "@nestjs/core";
+import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { LicensingModule } from "./licensing.module";
+import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { LicensingModule } from "./licensing.module";
+import { NestExpressApplication } from "@nestjs/platform-express";
 
 const VERSION = "latest";
+const GLOBAL_PREFIX = `/licensing/${VERSION}`;
 
 async function bootstrap() {
-    const app = await NestFactory.create(LicensingModule);
+    const app = await NestFactory.create<NestExpressApplication>(LicensingModule);
     const configService = app.get(ConfigService);
 
-    // set API version
-    const globalPrefix = `/licensing/${VERSION}`;
-    app.setGlobalPrefix(globalPrefix);
+    // global configuration for application
+    app.useGlobalPipes(new ValidationPipe())
+        .setGlobalPrefix(GLOBAL_PREFIX)
+        .useBodyParser("text"); // text parser is required for text/plain messages (the ones using PGP)
 
     // OpenAPI config (only for dev environment)
     if (configService.get("NODE_ENV", "development") === "development") {
@@ -21,9 +25,11 @@ async function bootstrap() {
             .setVersion(VERSION)
             .build();
         const doc = SwaggerModule.createDocument(app, config);
-        SwaggerModule.setup(`${globalPrefix}/docs`, app, doc);
+        SwaggerModule.setup(`${GLOBAL_PREFIX}/docs`, app, doc);
     }
 
     await app.listen(3000);
 }
 bootstrap();
+
+export { GLOBAL_PREFIX };

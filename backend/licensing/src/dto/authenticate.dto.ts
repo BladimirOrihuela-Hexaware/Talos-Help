@@ -4,7 +4,7 @@ import { IsString, Length } from "class-validator";
 export class AuthenticateDto {
     @ApiProperty({
         description: "License UUID",
-        example: "5AH3XA-18A02WB-1UNDF9B-1TELAMA",
+        example: "<TODO insert example here>",
     })
     @IsString()
     @Length(30, 30)
