@@ -1,11 +1,15 @@
 import { Actions,ActionsType } from "./models/actions";
 import { Injectable } from "@nestjs/common";
 import { ActionBase } from "./models/actions_base.entity";
-import * as data from "./data/action-data";
+import * as data from "./data/index";
 
 const actions: Actions = {
     alertaccept : data.AlertAcceptData,
-    alertaceeptifexist: data.AlertAcceptIfExistData,
+    alertacceptifexist: data.AlertAcceptIfExistData,
+    alertdismiss: data.AlertDismissData,
+    alertsettext: data.AlertSetTextData,
+    check:data.CheckData,
+    clear:data.ClearData,
 };
 
 @Injectable()
