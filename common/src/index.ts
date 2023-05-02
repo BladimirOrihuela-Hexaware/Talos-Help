@@ -8,3 +8,7 @@ export * from "./middlewares/current-user";
 export * from "./middlewares/error-handler";
 export * from "./middlewares/validate-authorization";
 export * from "./middlewares/validate-request";
+
+export * from "./models/integrations/basic_integration";
+export * from "./models/integrations/genrocket";
+export * from "./models/integrations/integration";
