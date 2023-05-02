@@ -8,8 +8,14 @@ const actions: Actions = {
     alertacceptifexist: data.AlertAcceptIfExistData,
     alertdismiss: data.AlertDismissData,
     alertsettext: data.AlertSetTextData,
-    check:data.CheckData,
-    clear:data.ClearData,
+    check: data.CheckData,
+    clear: data.ClearData,
+    click: data.ClickData,
+    close: data.CloseData,
+    deselectall: data.DeselectAllData,
+    deselectbyindex: data.DeselectByIndexData,
+    deselectbytext: data.DeselectByTextData,
+    deselectbyvalue: data.DeselectByValueData,
 };
 
 @Injectable()
