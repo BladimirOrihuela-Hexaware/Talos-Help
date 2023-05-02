@@ -4,7 +4,7 @@ import { Text, NestedListItem, ListItem } from "@common/components";
 import { DrawerWidth, Option, Options, Routes } from "@common/constants";
 import { RootState, AppDispatch } from "@services/store";
 import { connect } from "react-redux";
-import { getSelectedRoute, isToggleOpen } from "@services/navigation/selector";
+import { getSelectedRoute, isToggleOpen } from "@services/navigation/selectors";
 import { actions } from "@services/navigation/slicer";
 
 export interface Props {
