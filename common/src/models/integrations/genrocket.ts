@@ -1,6 +1,6 @@
 import { BasicIntegration } from "./basic_integration";
 
-type Step = {
+export type Step = {
   desc: string;
   image: string;
 };
