@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from "@nestjs/common";
-import { FeaturesService } from "./features.service";
+import { FeaturesService, ITypes } from "./features.service";
 import { ApiResponse, ApiTags, ApiParam, ApiExtraModels, getSchemaPath } from "@nestjs/swagger";
 import { NotFoundError } from "@atptalos/common";
 import { IntegrationsDto } from "./dto/integrationsDto.dto";
@@ -46,8 +46,8 @@ export class IntegrationController {
     })
     @ApiResponse({ status: 404, description: "integration ID not found" })
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })
-    getIntegration(@Param("id") id: string): IntegrationResponse {
-        const data = this.featuresService.getIntegration(id.toLocaleLowerCase());
+    getIntegration(@Param("id") id: ITypes): IntegrationResponse {
+        const data = this.featuresService.getIntegration(id);
         if (!data) throw new NotFoundError();
         return { integration: data };
     }

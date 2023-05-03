@@ -5,12 +5,15 @@ import * as data from "./data";
 
 const integrations: IntegrationsSchema = {
     genrocket: data.GenRocketData,
-};
+} as const;
+
+export type ITypes = keyof typeof integrations;
 
 @Injectable()
 export class FeaturesService {
-    getIntegration(id: string): { [id: string]: IntegrationsSchema } {
-        return { id: integrations[id] };
+    getIntegration(id: ITypes) {
+        if (id in integrations) return { [id]: integrations[id] };
+        else return undefined;
     }
     getIntegrations(): IntegrationBase[] {
         return Object.values(integrations).map((i) => {
