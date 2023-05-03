@@ -16,6 +16,11 @@ const actions: Actions = {
     deselectbyindex: data.DeselectByIndexData,
     deselectbytext: data.DeselectByTextData,
     deselectbyvalue: data.DeselectByValueData,
+    doubleclick: data.DoubleClickData,
+    doubleclickonobject: data.DoubleClickOnObjectData,
+    draganddrop: data.DragAndDropData,
+    draganddroponobject: data.DragAndDropOnObjectData,
+    goback: data.GoBackData,
 };
 
 @Injectable()
