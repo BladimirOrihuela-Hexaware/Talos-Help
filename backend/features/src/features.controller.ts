@@ -3,7 +3,8 @@ import { FeaturesService } from "./features.service";
 import { ApiResponse, ApiTags, ApiParam, ApiExtraModels, getSchemaPath } from "@nestjs/swagger";
 import { NotFoundError } from "@atptalos/common";
 import { IntegrationsDto } from "./dto/integrationsDto.dto";
-import { IntegrationsResponse, IntegrationResponse } from "./responses/integrations.res";
+import { IntegrationsResponse } from "./responses/integrations.res";
+import { IntegrationResponse } from "./responses/integration.res";
 
 @Controller("integrations")
 export class IntegrationsController {
@@ -41,6 +42,7 @@ export class IntegrationController {
     @ApiResponse({
         status: 200,
         description: "Integration page details",
+        type: IntegrationResponse,
     })
     @ApiResponse({ status: 404, description: "integration ID not found" })
     @ApiResponse({ status: 403, description: "Forbidden. License doesn't exist or is expired" })

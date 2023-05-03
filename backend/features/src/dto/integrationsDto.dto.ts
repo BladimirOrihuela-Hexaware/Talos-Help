@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IntegrationBase } from "../entities/integration_base";
+import { IntegrationBase } from "../models/integrationBase.entity";
 
 export class IntegrationsDto {
     @ApiProperty({

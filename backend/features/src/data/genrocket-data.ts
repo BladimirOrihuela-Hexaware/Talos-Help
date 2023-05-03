@@ -1,6 +1,6 @@
-import { GenRocket } from "../models/genrocket.entity";
+import { IGenrocket } from "@atptalos/common";
 
-export const GenRocketData: GenRocket = {
+export const GenRocketData: IGenrocket = {
     title: "GenRocket",
     logo: "https://firebasestorage.googleapis.com/v0/b/talos-help-dev.appspot.com/o/genrocket%2Fgenrocket%20logo.webp?alt=media&token=56d4d566-a0e7-470b-9713-a4ffbdb4569c",
     description:
