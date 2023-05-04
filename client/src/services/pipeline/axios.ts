@@ -1,19 +1,31 @@
 import axios from "axios";
-import { Services } from "@common/constants/services";
+import { Config } from "./types";
 
-const BasePath = "/api/";
+const BasePath = "https://taloshelp.dev";
 const Version = "latest";
 
 export class Pipeline {
-  constructor() {}
+    constructor() {}
 
-  async get(service: Services) {
-    const resp = await axios.get(`${BasePath}/${service}/${Version}`, {
-      headers: {},
-    });
+    async request(config: Config) {
+        const response = await axios({
+            method: config.method,
+            baseURL: BasePath,
+            url: this.buildURL(config),
+            data: config.data,
+        });
 
-    //TODO: Apply validation to request
+        //TODO: Apply validation to request
+        const { responseType } = config;
+        type ResponseType = typeof responseType;
+        console.log(response.data);
 
-    return resp.data;
-  }
+        return response.data;
+    }
+
+    private buildURL(config: Config): string {
+        const { service, id, route } = config;
+        if (id && route) return `${service}/${Version}/${route}/${id}`;
+        return `${service}/${Version}`;
+    }
 }
