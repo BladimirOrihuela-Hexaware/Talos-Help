@@ -15,6 +15,11 @@ export  {DoubleClickOnObjectData}  from "./doubleClickOnObject.action"
 export  {DragAndDropData}  from "./dragAndDrop.action"
 export  {DragAndDropOnObjectData}  from "./dragAndDropOnObject.action"
 export  {GoBackData}  from "./goBack.action"
+export  {GoForwardData} from "./goForward.action"
+export  {HighlightData} from "./highlight.action"
+export  {KeyDownData} from "./keyDown.action"
+export  {KeyUpData} from "./keyUp.action"
+export  {MouseOverData} from "./mouseOver.action"
 
 
 

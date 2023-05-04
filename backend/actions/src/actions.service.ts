@@ -21,6 +21,11 @@ const actions: Actions = {
     draganddrop: data.DragAndDropData,
     draganddroponobject: data.DragAndDropOnObjectData,
     goback: data.GoBackData,
+    goforward: data.GoForwardData,
+    highlight: data.HighlightData,
+    keydown: data.KeyDownData,
+    keyup: data.KeyUpData,
+    mouseover: data.MouseOverData
 };
 
 @Injectable()
