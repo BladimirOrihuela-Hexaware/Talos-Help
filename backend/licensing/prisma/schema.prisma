@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,47 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model generator {
+  id            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  active        Boolean   @default(true)
+  email         String    @unique @db.VarChar
+  registered_at DateTime  @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(6)
+  license       license[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model license {
+  id             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  active         Boolean   @default(true)
+  name           String    @db.VarChar
+  max_clients    Int
+  expiration     DateTime  @db.Date
+  client_timeout Int
+  org_id         String    @db.Uuid
+  generated_at   DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
+  generator_id   String    @db.Uuid
+  generator      generator @relation(fields: [generator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "license_fk_generator")
+  org            org       @relation(fields: [org_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "license_fk_org")
+
+  @@index([active])
+  @@index([id, active])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model license_usage {
+  license_id          String   @db.Uuid
+  client_id           String   @db.VarChar
+  last_ka_received_at DateTime @db.Timestamptz(6)
+
+  @@id([license_id, client_id])
+  @@index([license_id])
+}
+
+model org {
+  id      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name    String    @unique @db.VarChar
+  license license[]
 }

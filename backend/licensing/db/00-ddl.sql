@@ -1,5 +1,3 @@
-CREATE DATABASE licensing;
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE org(
