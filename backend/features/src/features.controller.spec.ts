@@ -2,6 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { IntegrationsController, IntegrationController } from "./features.controller";
 import { FeaturesService } from "./features.service";
 import { NotFoundError } from "@atptalos/common";
+import { GenRocketData } from "./data";
 
 describe("Integrations Controller", () => {
     let icontroller: IntegrationsController;
@@ -17,7 +18,7 @@ describe("Integrations Controller", () => {
     it("should return a formated list of integrations", () => {
         const { integrations } = icontroller.getIntegrations();
         expect(integrations).toHaveLength(1);
-        expect(integrations[0]).toMatchObject({ title: "GenRocket", logo: "genrocket logo.png" });
+        expect(integrations[0]).toMatchObject({ title: "GenRocket", logo: GenRocketData.logo });
     });
 });
 
@@ -34,11 +35,12 @@ describe("Integration Controller", () => {
 
     it("should return a found integration", () => {
         const { integration } = icontroller.getIntegration("genrocket");
-        expect(integration).toMatchObject({ title: "GenRocket", logo: "genrocket logo.png" });
+        expect(integration).toMatchObject({ genrocket: GenRocketData });
     });
 
     it("should return not found error", () => {
         try {
+            // @ts-ignore: try to send invalid ID
             icontroller.getIntegration("invalid id");
         } catch (error) {
             expect(error).toBeInstanceOf(NotFoundError);
@@ -49,7 +51,7 @@ describe("Integration Controller", () => {
         try {
             icontroller.getIntegration(undefined);
         } catch (error) {
-            expect(error).toBeInstanceOf(TypeError);
+            expect(error).toBeInstanceOf(NotFoundError);
         }
     });
 });
