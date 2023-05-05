@@ -25,7 +25,16 @@ const actions: Actions = {
     highlight: data.HighlightData,
     keydown: data.KeyDownData,
     keyup: data.KeyUpData,
-    mouseover: data.MouseOverData
+    mouseover: data.MouseOverData,
+    mouseoverandclick: data.MouseOverAndClickData,
+    navigate: data.NavigateData,
+    objectdisplayed: data.ObjectDisplayedData,
+    objectenabled: data.ObjectEnabledData,
+    objectselected: data.ObjectSelectedData,
+    quit: data.QuitData,
+    refresh: data.RefreshData,
+    resizewindow: data.ResizeWindowData,
+
 };
 
 @Injectable()

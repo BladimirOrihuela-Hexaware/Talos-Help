@@ -20,6 +20,16 @@ export  {HighlightData} from "./highlight.action"
 export  {KeyDownData} from "./keyDown.action"
 export  {KeyUpData} from "./keyUp.action"
 export  {MouseOverData} from "./mouseOver.action"
+export  {MouseOverAndClickData} from "./mouseOverAndClick.action"
+export  {NavigateData} from "./navigate.action"
+export  {ObjectDisplayedData} from "./objectDisplayed.action"
+export  {ObjectEnabledData} from "./objectEnabled.action"
+export  {ObjectSelectedData} from "./objectSelected.action"
+export  {QuitData} from "./quit.action"
+export  {RefreshData} from "./refresh.action"
+export  {ResizeWindowData} from "./resizeWindow.action"
+
+
 
 
 
