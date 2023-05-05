@@ -2,12 +2,12 @@ import { configureStore, ThunkAction, Action, combineReducers, PreloadedState } 
 import { authSlicer } from "@services/authentication/slicer";
 import { navigationSlicer } from "@services/navigation/slicer";
 import { reducer as integrationSlicer } from "@services/features/integrations/slicer";
-export const store = configureStore({
-    reducer: {
-        auth: authSlicer.reducer,
-        navigation: navigationSlicer.reducer,
-        integration: integrationSlicer,
-    },
+
+// Create the root reducer separately so we can extract the RootState type
+const rootReducer = combineReducers({
+    auth: authSlicer.reducer,
+    navigation: navigationSlicer.reducer,
+    integration: integrationSlicer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
