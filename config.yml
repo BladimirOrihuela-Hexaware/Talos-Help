@@ -1,0 +1,31 @@
+services:
+  - name: client
+    start: npm start
+    aliases:
+      - client
+    color: 0x00ff00
+    startedPatterns:
+      - "ready - started server on"
+    workDir: ./client
+
+  - name: features
+    start: npm run start:dev
+    startedPatterns:
+      - "Nest application successfully started"
+    errorPatterns:
+      - "EADDRINUSE"
+    aliases:
+      - clouds
+      - cloud
+      - integration
+      - integrations
+    color: 0xff00ff
+    workDir: ./backend/features
+
+groups:
+  - name: All Services
+    aliases:
+      - app
+    services:
+      - client
+      - features
