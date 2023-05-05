@@ -1,7 +1,7 @@
-import { PayloadAction, PayloadActionCreator, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { Integration } from "@atptalos/common";
 
-type IntegrationState = {
+export type IntegrationState = {
     integrations: {
         [name: string]: any;
     };
@@ -9,7 +9,7 @@ type IntegrationState = {
     error?: Error;
 };
 
-const initialState: IntegrationState = {
+export const initialState: IntegrationState = {
     integrations: {},
     loading: false,
 };
