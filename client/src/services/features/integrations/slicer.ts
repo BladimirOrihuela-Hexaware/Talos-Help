@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { ITypes } from "./types";
+import { PayloadAction, PayloadActionCreator, createSlice } from "@reduxjs/toolkit";
+import type { Integration } from "@atptalos/common";
 
 type IntegrationState = {
     integrations: {
@@ -18,13 +18,16 @@ export const integrationSlicer = createSlice({
     name: "integrations",
     initialState,
     reducers: {
-        fetchData: (state, _action) => {
+        startLoading: (state) => {
             state.loading = true;
+            state.error = undefined;
         },
-        fetchSuccess: (state, _action) => {
+        fetchSuccess: (state, action: PayloadAction<Integration>) => {
             state.loading = false;
             state.error = undefined;
             //Update integrations list
+            const name = action.payload.title.toLowerCase();
+            state.integrations[name] = action.payload;
         },
         loadCached: (state) => {
             state.loading = false;
@@ -32,6 +35,9 @@ export const integrationSlicer = createSlice({
         onError: (state, action: PayloadAction<Error>) => {
             state.loading = false;
             state.error = action.payload;
+        },
+        clean: (state) => {
+            state.integrations = {};
         },
     },
 });
