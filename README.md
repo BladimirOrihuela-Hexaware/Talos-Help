@@ -38,25 +38,15 @@ Open `C:\Windows\System32\drivers\etc\hosts` and add at the end:
 
 or wathever value in host from infra\k8s\ingress-srv.yaml
 
-## Skaffold
-
-We'll use https://skaffold.dev/ to orchestrate our services.
-
-1. You can download it from [`sharepoint`](https://hexawareonline.sharepoint.com/:u:/r/sites/ATP/Shared%20Documents/General/Dev%20-%20Installers/skaffold.exe?csf=1&web=1&e=HaaPcW)
-2. Make sure the .exe file is named `skaffold.exe`
-3. Move `skaffold.exe` to `C:\Program Files\skaffold`
-4. Add `C:\Program Files\skaffold` to the $PATH env variable
-
 ## Execute Orchestration
 
-in the root folder run
+in the root folder execute `microstart.sh`
+You can read more about `microstart` here: https://github.com/BenjaminGuzman/microstart
+
+After all services are up, you can access each service specifying the port.
 
 ```
-skaffold dev
+client -> localhost:3000
+features -> localhost:3001
+...
 ```
-
-After all services are up, you can access in the browser on https://taloshelp.dev/
-
-due to the browser is attepting to reach a DNS that doesn't have a valid Certificate, you might see a `Your connection isn't private` message on the browser. Click on a blank space in the page and type: `thisisunsafe` and press enter.
-
-This should ignore the certificate concern. Which is ok in this environment.
