@@ -12,41 +12,33 @@ create a branch from `master` with format
 
 # Development
 
-## ingress-nginx
+**Documentation**: TODO paste documentation links when this repo gets re-authored.
 
-If you have Helm
+## Orchestration
 
-```
-helm upgrade --install ingress-nginx ingress-nginx \
-  --repo https://kubernetes.github.io/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
-```
+`microstart.jar`
 
-If you don't have Helm or if you prefer to use a YAML manifest, you can run the following command instead:
+> CLI utility to start various processes in parallel with a start sequence.
 
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.0/deploy/static/provider/cloud/deploy.yaml
-```
+Executing `microstart.sh` within the root folder will run **all services**
 
-## Match ingress hosts
-
-Open `C:\Windows\System32\drivers\etc\hosts` and add at the end:
+If you don't need to run all services, update `config.yml`.
 
 ```
-127.0.0.1 taloshelp.dev
+services:
+      - licensing
+      - actions
+      - features // comment or remove the service you don't need But keep the changes locally.
+      - client
 ```
 
-or wathever value in host from infra\k8s\ingress-srv.yaml
-
-## Execute Orchestration
-
-in the root folder execute `microstart.sh`
-You can read more about `microstart` here: https://github.com/BenjaminGuzman/microstart
-
-After all services are up, you can access each service specifying the port.
+After the services are up, you can access each service by port.
 
 ```
-client -> localhost:3000
 features -> localhost:3001
-...
+actions -> localhost:3002
+licensing -> localhost:3003
+client -> localhost:3000
 ```
+
+You can read more about `microstart` here: https://github.com/BenjaminGuzman/microstart
