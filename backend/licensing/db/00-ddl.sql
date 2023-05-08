@@ -32,7 +32,7 @@ CREATE TABLE license(
 COMMENT ON COLUMN license.max_clients IS 'max_clients >= -1 at all times. -1 means "unlimited clients"';
 COMMENT ON COLUMN license.client_timeout IS 'client_timeout >= 0 at all times. 0 means "no timeout"';
 CREATE INDEX license_active_idx ON license(active);
-CREATE INDEX license_id_active_idx ON license(id, active);
+CREATE INDEX license_id_active_expiration_idx ON license(id, active, expiration);
 
 CREATE TABLE license_usage(
     license_id          uuid NOT NULL,

@@ -28,7 +28,8 @@ async function bootstrap() {
         SwaggerModule.setup(`${GLOBAL_PREFIX}/docs`, app, doc);
     }
 
-    await app.listen(3000);
+    const srv = await app.listen(configService.getOrThrow("PORT"));
+    console.log("HTTP server successfully bound to " + JSON.stringify(srv.address()));
 }
 bootstrap();
 

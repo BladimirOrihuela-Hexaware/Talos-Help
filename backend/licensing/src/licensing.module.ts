@@ -12,9 +12,11 @@ import { DesktopController } from './desktop/desktop.controller';
         ConfigModule.forRoot({
             validationSchema: Joi.object({
                 NODE_ENV: Joi.string().valid("development", "production", "test").default("development"),
+                PORT: Joi.number(),
                 DATABASE_URL: Joi.string(),
                 JWT_PRIVATE_KEY: Joi.string(),
                 JWT_EXP: Joi.string().default("30d"),
+                TALOS_PGP_PUBKEY: Joi.string()
             }),
         }),
         JwtModule.registerAsync({

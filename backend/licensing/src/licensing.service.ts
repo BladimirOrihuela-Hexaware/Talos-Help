@@ -1,6 +1,8 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { XMLParser } from "fast-xml-parser";
 import { AuthenticationErrorCode } from "./models/error-codes";
+import { PrismaClient, Prisma } from "@prisma/client";
+
 
 @Injectable()
 export class LicensingService {
@@ -12,6 +14,13 @@ export class LicensingService {
     });
 
     private readonly logger = new Logger(LicensingService.name);
+
+    private readonly prisma = new PrismaClient();
+
+    /**
+     * If client doesn't notify it is still alive after this number of minutes, it should be considered dead
+     */
+    public static readonly DEFAULT_CLIENT_TIMEOUT = 5;
 
     /**
      * This method doesn't validate the license!
@@ -82,9 +91,22 @@ export class LicensingService {
      * @param licenseId license id
      * @param machineId machine id that acquired the lock
      */
-    acquireLock(licenseId: string, machineId: string) {
-        // TODO execute a transaction to guarantee ACIDness
-        throw new Error("Unimplemented!");
+    async acquireLock(licenseId: string, machineId: string) {
+        // TODO garbage-collect dead clients
+
+        let outMsg: string;
+        try {
+            await this.prisma.$executeRaw`CALL acquire_lock(${licenseId}, ${machineId}, ${outMsg});`;
+        } catch (e) {
+            console.error("Error while trying to acquire a lock", e);
+            throw e;
+        }
+
+        outMsg = outMsg.toUpperCase();
+        if (outMsg === "SUCCESS")
+            return;
+
+        throw new Error(outMsg);
     }
 
     /**
@@ -96,9 +118,20 @@ export class LicensingService {
      * @param licenseId license id
      * @param machineId machine id that will release the lock
      */
-    releaseLock(licenseId: string, machineId: string) {
-        // TODO execute a transaction to guarantee ACIDness
-        throw new Error("Unimplemented!");
+    async releaseLock(licenseId: string, machineId: string) {
+        let outMsg: string;
+        try {
+            await this.prisma.$executeRaw`CALL release_lock(${licenseId}, ${machineId}, ${outMsg});`;
+        } catch (e) {
+            console.error("Error while trying to release a lock", e);
+            throw e;
+        }
+
+        outMsg = outMsg.toUpperCase();
+        if (outMsg === "SUCCESS")
+            return;
+
+        throw new Error(outMsg);
     }
 
     /**
@@ -112,32 +145,57 @@ export class LicensingService {
 
     /**
      * 
-     * @param email user email
-     * @returns true if that email is authorized to generate licenses, false otherwise
-     */
-    async canGenerateLicense(email: string): Promise<boolean> {
-        // TODO query database, return true if email is found in `generator` database
-        return false;
-    }
-
-    /**
-     * 
      * @param email generator's email
-     * @returns generator's information or null if no generator is associated with that email
+     * @returns generator's information or null if no generator is associated with that email (or it's not active)
      */
-    async generatorInfo(email: string): Promise<object> {
-        // TODO query database and retrieve generator info
-        return {};
+    async generatorInfo(email: string): Promise<{id: string; email: string}> {
+        const res = await this.prisma.generator.findFirst({
+            select: {
+                id: true,
+                email: true,
+            },
+            where: {
+                email: email,
+                active: true,
+            }
+        });
+
+        return res;
     }
 
     /**
      * Generates a new license
      * @param generatorId id of the person that generates this license
+     * @param projName project name
+     * @param orgId organization id
+     * @param maxLocks maximum number of locks that can be acquired simultaneously (max # of clients that can use TALOS at the same time)
+     * @param expiration license expiration date
+     * @param clientTimeout default is {@link LicensingService.DEFAULT_CLIENT_TIMEOUT}
      * @returns the license ID
      */
-    async generateLicense(generatorId: string): Promise<string> {
-        // TODO insert to database and retrieve license id
-        return "";
+    async generateLicense(
+        generatorId: string,
+        orgId: string,
+        projName: string,
+        maxLocks: number,
+        expiration: Date | string,
+        clientTimeout: number = LicensingService.DEFAULT_CLIENT_TIMEOUT
+    ): Promise<string> {
+        const res = await this.prisma.license.create({
+            select: {
+                id: true
+            },
+            data: {
+                name: projName,
+                max_clients: maxLocks,
+                expiration: expiration,
+                client_timeout: clientTimeout,
+                generator_id: generatorId,
+                org_id: orgId
+            }
+        });
+        
+        return res.id;
     }
 }
 

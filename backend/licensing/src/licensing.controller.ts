@@ -97,17 +97,30 @@ export class LicensingController {
         status: 400,
         description: "There is a problem. It's very likely that a license is already associated with that client",
     })
-    async generate(@Body() GenerateLicenseDto: GenerateLicenseDto): Promise<LicenseGenerationResponse> {
+    async generate(@Body() body: GenerateLicenseDto): Promise<LicenseGenerationResponse> {
         // TODO guard with OAuth2 and Microsoft
         const email = "replace with email from oauth2";
-        const generator = this.licensingService.generatorInfo(email);
-        if (!generator)
-            throw new UnauthorizedException();
+        let generator: {id: string, email: string};
+        try {
+            generator = await this.licensingService.generatorInfo(email);
+            if (!generator)
+                throw new UnauthorizedException();
+        } catch (e) {
+            console.error(`Failed to query generator information for email ${email}`, e);
+            throw new InternalServerErrorException();
+        }
 
         try {
-            const licenseId = await this.licensingService.generateLicense(generator.id);
+            const licenseId = await this.licensingService.generateLicense(
+                generator.id,
+                body.orgId,
+                body.projName,
+                body.maxClients,
+                body.expiration,
+                body.clientTimeout
+            );
             return {licenseId: licenseId};
-        } catch(e) {
+        } catch (e) {
             console.error("Error while generating license", e);
             throw new InternalServerErrorException();
         }
