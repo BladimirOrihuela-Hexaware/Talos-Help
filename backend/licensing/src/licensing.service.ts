@@ -197,6 +197,23 @@ export class LicensingService {
         
         return res.id;
     }
+
+    async handleKeepAlive(licenseId: string, clientId: string) {
+        const res = await this.prisma.license_usage.update({
+            select: {
+                last_ka_received_at: true
+            },
+            data: {
+                last_ka_received_at: new Date()
+            },
+            where: {
+                license_id_client_id: {
+                    license_id: licenseId,
+                    client_id: clientId
+                }
+            }
+        });
+    }
 }
 
 interface OldLicenseModel {

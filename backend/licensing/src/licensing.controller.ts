@@ -4,8 +4,6 @@ import {
     ForbiddenException,
     Get,
     HttpCode,
-    HttpException,
-    HttpStatus,
     InternalServerErrorException,
     Logger,
     NotImplementedException,

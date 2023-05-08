@@ -10,9 +10,9 @@ export class AcquireLockDto {
     licenseId: string;
 
     @ApiProperty({
-        description: "Machine UID that will acquire the lock",
+        description: "Client UID that will acquire the lock",
         example: "<TODO insert example here>"
     })
     @IsString()
-    machineId: string;
+    clientId: string;
 }
