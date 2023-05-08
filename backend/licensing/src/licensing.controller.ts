@@ -6,9 +6,11 @@ import {
     HttpCode,
     HttpException,
     HttpStatus,
+    InternalServerErrorException,
     Logger,
     NotImplementedException,
-    Post
+    Post,
+    UnauthorizedException
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -89,14 +91,25 @@ export class LicensingController {
 
     @Post("generate")
     @ApiTags("create")
-    @ApiResponse({ status: 201, description: "License was successfully created" })
+    @ApiResponse({ status: 201, description: "License was successfully created", type: LicenseGenerationResponse })
+    @ApiResponse({ status: 403, description: "You're not authorized to generate licenses" })
     @ApiResponse({
         status: 400,
         description: "There is a problem. It's very likely that a license is already associated with that client",
     })
-    generate(@Body() GenerateLicenseDto: GenerateLicenseDto): LicenseGenerationResponse {
-        throw new HttpException("This is still work in progress", HttpStatus.NOT_IMPLEMENTED);
+    async generate(@Body() GenerateLicenseDto: GenerateLicenseDto): Promise<LicenseGenerationResponse> {
+        // TODO guard with OAuth2 and Microsoft
+        const email = "replace with email from oauth2";
+        const generator = this.licensingService.generatorInfo(email);
+        if (!generator)
+            throw new UnauthorizedException();
 
-        // TODO generate license...
+        try {
+            const licenseId = await this.licensingService.generateLicense(generator.id);
+            return {licenseId: licenseId};
+        } catch(e) {
+            console.error("Error while generating license", e);
+            throw new InternalServerErrorException();
+        }
     }
 }
