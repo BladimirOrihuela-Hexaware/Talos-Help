@@ -28,6 +28,14 @@ export  {ObjectSelectedData} from "./objectSelected.action"
 export  {QuitData} from "./quit.action"
 export  {RefreshData} from "./refresh.action"
 export  {ResizeWindowData} from "./resizeWindow.action"
+export {RightClickData} from "./rightClick.action"
+export {RightClickOnObjectData} from "./rightClickOnObject.action"
+export {ScrollData} from "./scroll.action"
+export {selectByIndexData} from "./selectByIndex.action"
+export {selectByTextData} from "./selectByText.action"
+export {selectByValueData} from "./selectByValue.action"
+export {selectFrameData} from "./selectFrame.action"
+export {selectListByTextData} from "./selectListByText.action"
 
 
 

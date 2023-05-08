@@ -34,7 +34,14 @@ const actions: Actions = {
     quit: data.QuitData,
     refresh: data.RefreshData,
     resizewindow: data.ResizeWindowData,
-
+    rightclick: data.RightClickData,
+    rightclickonobject: data.RightClickOnObjectData,
+    scroll: data.ScrollData,
+    selectbyindex: data.selectByIndexData,
+    selectbytext: data.selectByTextData,
+    selectbyvalue: data.selectByValueData,
+    selectframe: data.selectFrameData,
+    selectlistbytext: data.selectListByTextData,
 };
 
 @Injectable()
