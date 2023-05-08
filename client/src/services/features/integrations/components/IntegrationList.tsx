@@ -6,6 +6,7 @@ import { getAllIntegrations } from "../thunks";
 import { getIntegrationList } from "../selectors";
 import type { BasicIntegration } from "@atptalos/common";
 import { Grid } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 interface Props {
     getIntegrations: () => void;
@@ -13,26 +14,22 @@ interface Props {
 }
 
 const IntegrationsList = (props: Props) => {
+    const { getIntegrations, list } = props;
+    const router = useRouter();
     const navigate = (title: string) => {
-        // Nav to ${title};
+        router.push(`/integration/${title.toLocaleLowerCase()}`);
     };
 
     useEffect(() => {
         //Fetch all integrations
-        props.getIntegrations();
+        getIntegrations();
     }, []);
 
     return (
         <Grid container spacing={3} justifyContent="space-evenly" columns={3} sx={{ padding: 3 }}>
-            {props.list.map((i, index) => (
-                <Grid item xs={1}>
-                    <Card
-                        key={`${i.title}.${index}`}
-                        title={i.title}
-                        logo={i.logo}
-                        description={i.description}
-                        onClick={navigate}
-                    />
+            {list.map((i) => (
+                <Grid item xs={1} key={`${i.title}`}>
+                    <Card title={i.title} logo={i.logo} description={i.description} onClick={navigate} />
                 </Grid>
             ))}
         </Grid>
