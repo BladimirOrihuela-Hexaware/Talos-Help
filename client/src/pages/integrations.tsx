@@ -1,11 +1,10 @@
-import { Text } from "@common/components";
 import ScreenWrapper from "@services/navigation/components/ScreenWrapper";
-import React from "react";
+import IntegrationsList from "@services/features/integrations/components/IntegrationList";
 
 const IntegrationsScreen = () => {
     return (
         <ScreenWrapper>
-            <Text>Hello from /Integrations</Text>
+            <IntegrationsList />
         </ScreenWrapper>
     );
 };
