@@ -1,7 +1,7 @@
 import { Routes } from "@common/constants";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type State = {
+export type State = {
     selected: Routes;
     openActionsList: boolean;
 };

@@ -7,6 +7,7 @@ const VERSION = "latest";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    app.enableCors();
     const configService = app.get(ConfigService);
 
     // set API version
@@ -23,7 +24,6 @@ async function bootstrap() {
         const doc = SwaggerModule.createDocument(app, config);
         SwaggerModule.setup(`${globalPrefix}/docs`, app, doc);
     }
-
-    await app.listen(3000);
+    await app.listen(+configService.get("PORT"));
 }
 bootstrap();
