@@ -22,10 +22,35 @@ services:
     color: 0xff00ff
     workDir: ./backend/features
 
+  - name: actions
+    start: npm run start:dev
+    startedPatterns:
+      - "Nest application successfully started"
+    errorPatterns:
+      - "EADDRINUSE"
+    aliases:
+      - actions
+    color: 0xff00ff
+    workDir: ./backend/actions
+
+  - name: licensing
+    start: npm run start:dev
+    startedPatterns:
+      - "Nest application successfully started"
+    errorPatterns:
+      - "EADDRINUSE"
+    aliases:
+      - licensing
+      - license
+    color: 0xff00ff
+    workDir: ./backend/licensing
+
 groups:
   - name: All Services
     aliases:
       - app
     services:
-      - client
+      - licensing
+      - actions
       - features
+      - client
