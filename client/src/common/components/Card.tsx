@@ -1,5 +1,5 @@
 import React from "react";
-import { CardContent, CardMedia, CardActionArea, Card as MuiCard, useTheme } from "@mui/material";
+import { CardContent, CardMedia, CardActionArea, Card as MuiCard } from "@mui/material";
 import { Text } from "./Text";
 
 interface Props {
@@ -14,7 +14,7 @@ export const Card = (props: Props) => {
     return (
         <MuiCard onClick={() => onClick(title)} sx={{ maxWidth: 345, backgroundColor: "#F0F0F0" }}>
             <CardActionArea>
-                <CardMedia component="img" height="140" image={logo} alt={title} />
+                <CardMedia component="img" height="140" image={logo} alt={title} sx={{ objectFit: "none" }} />
                 <CardContent>
                     <Text gutterBottom type="h5">
                         {title}
