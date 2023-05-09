@@ -24,6 +24,6 @@ async function bootstrap() {
         SwaggerModule.setup(`${globalPrefix}/docs`, app, doc);
     }
 
-    await app.listen(3000);
+    await app.listen(+configService.get("PORT"));
 }
 bootstrap();

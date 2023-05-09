@@ -13,9 +13,7 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     // global configuration for application
-    app.useGlobalPipes(new ValidationPipe())
-        .setGlobalPrefix(GLOBAL_PREFIX)
-        .useBodyParser("text"); // text parser is required for text/plain messages (the ones using PGP)
+    app.useGlobalPipes(new ValidationPipe()).setGlobalPrefix(GLOBAL_PREFIX).useBodyParser("text"); // text parser is required for text/plain messages (the ones using PGP)
 
     // OpenAPI config (only for dev environment)
     if (configService.get("NODE_ENV", "development") === "development") {
@@ -28,7 +26,7 @@ async function bootstrap() {
         SwaggerModule.setup(`${GLOBAL_PREFIX}/docs`, app, doc);
     }
 
-    await app.listen(3000);
+    await app.listen(+configService.get("PORT"));
 }
 bootstrap();
 

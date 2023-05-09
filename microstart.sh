@@ -1,0 +1,1 @@
+java -jar microstart.jar -c=config.yml -i="group start app"

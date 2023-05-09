@@ -12,7 +12,7 @@ export type ITypes = keyof typeof integrations;
 @Injectable()
 export class FeaturesService {
     getIntegration(id: ITypes) {
-        if (id in integrations) return { [id]: integrations[id] };
+        if (id in integrations) return integrations[id];
         else return undefined;
     }
     getIntegrations(): IntegrationBase[] {

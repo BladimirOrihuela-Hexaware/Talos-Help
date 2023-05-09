@@ -12,51 +12,33 @@ create a branch from `master` with format
 
 # Development
 
-## ingress-nginx
+**Documentation**: TODO paste documentation links when this repo gets re-authored.
 
-If you have Helm
+## Orchestration
 
-```
-helm upgrade --install ingress-nginx ingress-nginx \
-  --repo https://kubernetes.github.io/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
-```
+`microstart.jar`
 
-If you don't have Helm or if you prefer to use a YAML manifest, you can run the following command instead:
+> CLI utility to start various processes in parallel with a start sequence.
 
-```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.0/deploy/static/provider/cloud/deploy.yaml
-```
+Executing `microstart.sh` within the root folder will run **all services**
 
-## Match ingress hosts
-
-Open `C:\Windows\System32\drivers\etc\hosts` and add at the end:
+If you don't need to run all services, update `config.yml`.
 
 ```
-127.0.0.1 taloshelp.dev
+services:
+      - licensing
+      - actions
+      - features // comment or remove the service you don't need But keep the changes locally.
+      - client
 ```
 
-or wathever value in host from infra\k8s\ingress-srv.yaml
-
-## Skaffold
-
-We'll use https://skaffold.dev/ to orchestrate our services.
-
-1. You can download it from [`sharepoint`](https://hexawareonline.sharepoint.com/:u:/r/sites/ATP/Shared%20Documents/General/Dev%20-%20Installers/skaffold.exe?csf=1&web=1&e=HaaPcW)
-2. Make sure the .exe file is named `skaffold.exe`
-3. Move `skaffold.exe` to `C:\Program Files\skaffold`
-4. Add `C:\Program Files\skaffold` to the $PATH env variable
-
-## Execute Orchestration
-
-in the root folder run
+After the services are up, you can access each service by port.
 
 ```
-skaffold dev
+features -> localhost:3001
+actions -> localhost:3002
+licensing -> localhost:3003
+client -> localhost:3000
 ```
 
-After all services are up, you can access in the browser on https://taloshelp.dev/
-
-due to the browser is attepting to reach a DNS that doesn't have a valid Certificate, you might see a `Your connection isn't private` message on the browser. Click on a blank space in the page and type: `thisisunsafe` and press enter.
-
-This should ignore the certificate concern. Which is ok in this environment.
+You can read more about `microstart` here: https://github.com/BenjaminGuzman/microstart

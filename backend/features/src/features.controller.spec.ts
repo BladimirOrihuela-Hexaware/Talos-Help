@@ -35,7 +35,7 @@ describe("Integration Controller", () => {
 
     it("should return a found integration", () => {
         const { integration } = icontroller.getIntegration("genrocket");
-        expect(integration).toMatchObject({ genrocket: GenRocketData });
+        expect(integration).toMatchObject(GenRocketData);
     });
 
     it("should return not found error", () => {
