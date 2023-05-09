@@ -2,18 +2,11 @@ import * as React from "react";
 import { styled, alpha, AppBar as MuiAppBar, Box, Toolbar, IconButton, InputBase, InputAdornment } from "@mui/material";
 import ContactMailRounded from "@mui/icons-material/ContactMailRounded";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Code } from "./Code";
 
 const Search = styled("div")(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.primary.light, 0.15),
-}));
-
-const Shortcut = styled("kbd")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.primary.light, 0.15),
-    padding: "0 5px",
-    fontSize: "0.9rem",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -69,7 +62,7 @@ export const AppBar = (props: Props) => {
                         tabIndex={0}
                         endAdornment={
                             <InputAdornment position="end" color="primary">
-                                <Shortcut>CTRL B</Shortcut>
+                                <Code>CTRL B</Code>
                             </InputAdornment>
                         }
                     />

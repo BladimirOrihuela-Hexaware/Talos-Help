@@ -19,11 +19,19 @@ const getTextVariant = (type?: TextType): Variant => {
 
 type TextProps = {
     type?: TextType;
+    bold?: boolean;
+    color?: "black" | "blue" | "green";
 } & TypographyProps;
 
 export const Text = (props: TextProps) => {
+    const { bold, type, color } = props;
     return (
-        <Typography {...props} variant={getTextVariant(props.type)} color="primary">
+        <Typography
+            {...props}
+            variant={getTextVariant(type)}
+            color={color ?? "primary"}
+            sx={{ fontWeight: bold ? "bold" : undefined }}
+        >
             {props.children}
         </Typography>
     );
