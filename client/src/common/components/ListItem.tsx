@@ -20,6 +20,17 @@ export const ListItem = (props: Props) => {
                 selected={selectedItem === route}
                 onClick={() => onClick(route)}
                 href={route}
+                sx={{
+                    "&.Mui-selected": {
+                        backgroundColor: "#00c6f754",
+                    },
+                    "&.Mui-focusVisible": {
+                        backgroundColor: "#00c6f754",
+                    },
+                    ":hover": {
+                        backgroundColor: "#00c6f724",
+                    },
+                }}
             >
                 <ListItemText disableTypography>
                     <Text>{text}</Text>
