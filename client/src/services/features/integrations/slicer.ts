@@ -3,7 +3,7 @@ import type { Integration, BasicIntegration } from "@atptalos/common";
 
 export type IntegrationState = {
     integrations: {
-        [name: string]: Integration;
+        [name: string]: BasicIntegration | Integration;
     };
     loading: boolean;
     error?: Error;
