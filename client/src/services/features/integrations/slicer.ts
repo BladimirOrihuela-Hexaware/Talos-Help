@@ -1,9 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { Integration, BasicIntegration } from "@atptalos/common";
+import type { IntegrationTypes } from "./types";
 
 export type IntegrationState = {
     integrations: {
-        [name: string]: BasicIntegration | Integration;
+        [name: string]: IntegrationTypes;
     };
     loading: boolean;
     error?: Error;
