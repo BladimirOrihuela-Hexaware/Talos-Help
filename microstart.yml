@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/BenjaminGuzman/microstart/main/src/main/resources/schema.json
+services:
+  - name: client
+    start: npm start
+    aliases: 
+      - client 
+    color: 0x00ff00 
+    startedPatterns: 
+      - "ready - started server on" 
+    workDir: ./client  
+  
+  - name: features
+    start: npm run start:dev 
+    startedPatterns: 
+      - "Nest application successfully started" 
+    errorPatterns:
+      - "EADDRINUSE"
+    aliases: 
+      - clouds 
+      - cloud 
+      - integration 
+      - integrations 
+    color: 0xff00ff
+    workDir: ./backend/features  
+
+  - name: licensing
+    start: npm run start
+    startedPatterns:
+      - "HTTP server successfully bound to"
+    errorPatterns:
+      - "EADDRINUSE"
+    workDir: ./backend/licensing
+  
+  - name: licensing db
+    aliases:
+      - licensing-db
+    start: docker run -e POSTGRES_PASSWORD=pass --network talos-help -p 5432:5432 --name licensing-db licensing-db
+    stop: docker rm -f licensing-db
+    startedPatterns:
+      - "^[0-9a-f]{64}"
+      - "database system is ready to accept connections"
+    errorPatterns:
+      - "Error response from daemon"
+
+groups:
+  - name: All Services 
+    aliases: 
+      - app 
+    services: 
+      - client 
+      - features
+      - licensing
+      - licensing-db
+  
+  - name: Databases
+    services:
+      - licensing-db
+
+  - name: Backend
+    services:
+      - features
+      - licensing
+    dependencies:
+      - Databases
+
+  - name: Application
+    services:
+      - client
+    dependencies:
+      - Backend

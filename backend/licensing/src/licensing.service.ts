@@ -88,17 +88,14 @@ export class LicensingService {
     /**
      * Acquires a lock on the license
      * 
-     * Error is thrown if lock is already acquired or all available locks for the given license have already been acquired
-     * 
      * This is an atomic operation
      * @param licenseId license id
      * @param clientId client id that acquired the lock
      */
     async acquireLock(licenseId: string, clientId: string): Promise<SPOut> {
-        // TODO garbage-collect dead clients
-
         let outMsg: string;
         try {
+            // acquire_lock procedure will automatically garbage-collect dead clients if needed
             const res = await this.prisma.$queryRaw`CALL acquire_lock(${licenseId}::uuid, ${clientId}::VARCHAR, '');`;
             outMsg = res[0].out_msg;
         } catch (e) {
@@ -117,8 +114,6 @@ export class LicensingService {
 
     /**
      * Releases the lock the given client holds for the given license
-     * 
-     * Error is thrown if lock has not been acquired
      * 
      * This is an atomic operation
      * @param licenseId license id
