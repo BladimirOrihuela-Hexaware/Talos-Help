@@ -9,7 +9,7 @@ interface Props {
     name: string;
     desc?: string;
     steps?: StepType[];
-    custom?: React.ReactNode; // If Custom Component is provided, pass [] as steps
+    custom?: React.ReactNode;
 }
 
 /**
@@ -18,8 +18,6 @@ interface Props {
  * description (optional),
  * a list of steps (optional) or any Custom Component
  *
- * If you want to render a custom component insted of Step,
- * pass [] in the steps property to avoid lint complains.
  * @param Props
  */
 
@@ -34,7 +32,7 @@ export const Section = (props: Props) => {
                     {desc}
                 </Text>
             )}
-            {custom !== undefined ? custom : steps && steps.map((step) => <Step step={step} />)}
+            {custom !== undefined ? custom : steps && steps.map((step) => <Step key={step.desc} step={step} />)}
         </>
     );
 };

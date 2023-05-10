@@ -2,26 +2,28 @@ import { Text, Code, Section } from "@common/components";
 import { RootState, AppDispatch } from "@services/store";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getIntegrationByName } from "../selectors";
-import type { Integration } from "@atptalos/common";
+import { getIntegrationByName, shouldFetchIntegration } from "../selectors";
+import type { IntegrationTypes } from "../types";
+import type { IGenrocket } from "@atptalos/common";
 import { getIntegration } from "../thunks";
 import { List, ListItem, Skeleton } from "@mui/material";
 import Link from "next/link";
 
 interface Props {
-    data?: Integration;
+    data?: IntegrationTypes;
+    shouldFetch: boolean;
     fetch: () => void;
 }
 const Genrocket = (props: Props) => {
-    const { data, fetch } = props;
+    const { data, fetch, shouldFetch } = props;
 
     useEffect(() => {
-        if (!data || !data.getAtts) {
+        if (shouldFetch) {
             fetch();
         }
     }, []);
 
-    if (!data || !data.getAtts) {
+    if (shouldFetch) {
         return <Skeleton variant="rectangular" width={210} height={60} />;
     }
 
@@ -36,7 +38,7 @@ const Genrocket = (props: Props) => {
         unlink,
         unlinkProject,
         knownIssues,
-    } = data;
+    } = data as IGenrocket;
     const subtitles = [
         "Prerequisites",
         "Connect TALOS to GenRocket",
@@ -112,6 +114,7 @@ const Genrocket = (props: Props) => {
 const mapStateToProps = (state: RootState) => {
     return {
         data: getIntegrationByName(state, "genrocket"),
+        shouldFetch: shouldFetchIntegration(state, "genrocket"),
     };
 };
 const mapDispatchToProps = (dispatch: AppDispatch) => {
