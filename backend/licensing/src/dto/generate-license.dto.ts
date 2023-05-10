@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsISO8601, IsInt, IsString, IsUUID, Length, Max, Min } from "class-validator";
-import { LicensingService } from "src/licensing.service";
+import { IsDate, IsDateString, IsISO8601, IsInt, IsString, IsUUID, Length, Max, Min, MinDate } from "class-validator";
+import { LicensingService } from "../licensing.service";
+import { Type } from "class-transformer";
 
 export class GenerateLicenseDto {
     @ApiProperty({
@@ -29,7 +30,9 @@ export class GenerateLicenseDto {
     @ApiProperty({
         description: "Expiration date. Should be in the future. Time data may not be considered"
     })
-    @IsISO8601()
+    @Type(() => Date)
+    @IsDate()
+    @MinDate(() => new Date())
     expiration: Date;
 
     @ApiProperty({

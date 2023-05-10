@@ -6,6 +6,7 @@ import { JWTModuleConfigService } from "./jwt-module-config.service";
 import { LicensingController } from "./licensing.controller";
 import { LicensingService } from "./licensing.service";
 import { DesktopController } from './desktop/desktop.controller';
+import { AdminController } from './admin/admin.controller';
 
 @Module({
     imports: [
@@ -24,7 +25,7 @@ import { DesktopController } from './desktop/desktop.controller';
             imports: [ConfigModule],
         }),
     ],
-    controllers: [LicensingController, DesktopController],
+    controllers: [LicensingController, DesktopController, AdminController],
     providers: [LicensingService],
 })
 export class LicensingModule {}

@@ -1,5 +1,9 @@
 # Licensing microservice
 
+## How to test
+
+Only e2e test exist. To execute them use `test/e2e.sh`(test/e2e.sh)
+
 ## Database
 
 Relational diagram: 

@@ -7,7 +7,9 @@ import {
     Put,
     Patch,
     UseGuards,
-    Req
+    Req,
+    ValidationPipe,
+    InternalServerErrorException
 } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -33,9 +35,12 @@ export class DesktopController {
     @ApiResponse({ status: 409, description: "You already acquired a lock" })
     @ApiResponse({ status: 500, description: "Error" })
     @HttpCode(200)
-    public async acquireLock(@Body() body: AcquireLockDto): Promise<string> {
+    public async acquireLock(
+        // validation pipe is required here because body was parsed by signature guard, after global validation pipe could validate it
+        @Body(new ValidationPipe()) body: AcquireLockDto
+    ): Promise<string> {
         try {
-            this.licensingService.acquireLock(body.licenseId, body.clientId);
+            await this.licensingService.acquireLock(body.licenseId, body.clientId);
             const payload: DesktopJWTPayload = {
                 clientId: body.clientId,
                 licenseId: body.licenseId
@@ -45,6 +50,7 @@ export class DesktopController {
             // If so, there will be a problem but simply creating the session again will solve it
         } catch(e) {
             // TODO catch errors and throw exceptions accordingly
+            throw new InternalServerErrorException();
         }
     }
 
@@ -56,11 +62,15 @@ export class DesktopController {
     @ApiResponse({ status: 200, description: "Lock on license was released" })
     @ApiResponse({ status: 409, description: "Lock has not been acquired" })
     @ApiResponse({ status: 500, description: "Error" })
-    public async releaseLock(@Body() body: ReleaseLockDto): Promise<boolean> {
+    public async releaseLock(
+        // validation pipe is required here because body was parsed by signature guard, after global validation pipe could validate it
+        @Body(new ValidationPipe()) body: ReleaseLockDto
+    ): Promise<boolean> {
         try {
-            this.licensingService.releaseLock(body.licenseId, body.machineId);
+            await this.licensingService.releaseLock(body.licenseId, body.clientId);
         } catch(e) {
             // TODO catch errors and throw exceptions accordingly
+            throw new InternalServerErrorException();
         }
         return true;
     }
@@ -81,6 +91,7 @@ export class DesktopController {
             this.licensingService.handleKeepAlive(licenseId, clientId);
         } catch(e) {
             // TODO catch errors and throw exceptions accordingly
+            throw new InternalServerErrorException();
         }
         return true;
     }

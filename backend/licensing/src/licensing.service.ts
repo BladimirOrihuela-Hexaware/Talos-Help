@@ -89,14 +89,16 @@ export class LicensingService {
      * 
      * This is an atomic operation
      * @param licenseId license id
-     * @param machineId machine id that acquired the lock
+     * @param clientId client id that acquired the lock
      */
-    async acquireLock(licenseId: string, machineId: string) {
+    async acquireLock(licenseId: string, clientId: string) {
         // TODO garbage-collect dead clients
 
         let outMsg: string;
         try {
-            await this.prisma.$executeRaw`CALL acquire_lock(${licenseId}, ${machineId}, ${outMsg});`;
+            await this.prisma.$executeRaw`CALL acquire_lock(${licenseId}::VARCHAR, ${clientId}::VARCHAR, ${outMsg}::VARCHAR);`;
+            // TODO handle message
+            console.log("out message", outMsg);
         } catch (e) {
             console.error("Error while trying to acquire a lock", e);
             throw e;
@@ -110,18 +112,20 @@ export class LicensingService {
     }
 
     /**
-     * Releases the lock the given machine holds for the given license
+     * Releases the lock the given client holds for the given license
      * 
      * Error is thrown if lock has not been acquired
      * 
      * This is an atomic operation
      * @param licenseId license id
-     * @param machineId machine id that will release the lock
+     * @param clientId client id that will release the lock
      */
-    async releaseLock(licenseId: string, machineId: string) {
+    async releaseLock(licenseId: string, clientId: string) {
         let outMsg: string;
         try {
-            await this.prisma.$executeRaw`CALL release_lock(${licenseId}, ${machineId}, ${outMsg});`;
+            await this.prisma.$executeRaw`CALL release_lock(${licenseId}::VARCHAR, ${clientId}::VARCHAR, ${outMsg}::VARCHAR);`;
+            // TODO handle message
+            console.log("out message", outMsg);
         } catch (e) {
             console.error("Error while trying to release a lock", e);
             throw e;

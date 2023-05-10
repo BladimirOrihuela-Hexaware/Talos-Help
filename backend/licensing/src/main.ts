@@ -13,7 +13,7 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
 
     // global configuration for application
-    app.useGlobalPipes(new ValidationPipe())
+    app.useGlobalPipes(new ValidationPipe({transform: true}))
         .setGlobalPrefix(GLOBAL_PREFIX)
         .useBodyParser("text"); // text parser is required for text/plain messages (the ones using PGP)
 

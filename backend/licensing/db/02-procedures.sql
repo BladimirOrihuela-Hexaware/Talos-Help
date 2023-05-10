@@ -4,31 +4,39 @@ AS $$
 DECLARE license_uuid uuid;
 DECLARE n_locks INT; -- number of locks currently acquired for this license
 DECLARE max_n_locks INT; -- maximum number of concurrent locks for this license
+DECLARE is_active BOOLEAN DEFAULT false;
+DECLARE exp_date DATE;
 BEGIN
     SELECT CAST(in_license_id AS uuid) INTO license_uuid;
 
-    IF NOT EXISTS (SELECT license_id FROM license WHERE license_id = license_uuid AND active = TRUE AND expiration > CURRENT_DATE) THEN -- check license has not expired
+    SELECT active, expiration INTO is_active, exp_date FROM license WHERE id = license_uuid;
+
+    IF is_active IS false THEN -- check license is still active
         out_msg = 'E_EXPIRED';
     ELSE
-        LOCK TABLE license_usage IN EXCLUSIVE MODE; -- only allow concurrent reads when the lock is acquired
-
-        IF NOT EXISTS (SELECT license_id FROM license_usage WHERE license_id = license_uuid AND client_id = in_client_id) THEN -- verify lock has not been acquired
-            SELECT COUNT(license_id) INTO n_locks FROM license_usage WHERE license_id = license_uuid;
-            SELECT max_clients INTO max_n_locks FROM license WHERE license_id = license_uuid;
-
-            IF n_locks < max_n_locks THEN -- verify there are locks available
-                INSERT INTO license_usage(license_id, client_id, last_ka_received_at) VALUES (license_uuid, in_client_id, clock_timestamp());
-                out_msg = 'SUCCESS';
-            ELSE
-                out_msg = 'E_LIMIT_REACHED';
-            END IF;
+        IF exp_date < CURRENT_DATE THEN -- check license has not expired
+            out_msg = 'E_EXPIRED';
         ELSE
-            -- lock was already acquired
-            out_msg = 'E_ALREADY_ACQUIRED';
+            LOCK TABLE license_usage IN EXCLUSIVE MODE; -- only allow concurrent reads when the lock is acquired
+
+            IF NOT EXISTS (SELECT license_id FROM license_usage WHERE license_id = license_uuid AND client_id = in_client_id) THEN -- verify lock has not been acquired
+                SELECT COUNT(license_id) INTO n_locks FROM license_usage WHERE license_id = license_uuid;
+                SELECT max_clients INTO max_n_locks FROM license WHERE id = license_uuid;
+
+                IF n_locks < max_n_locks THEN -- verify there are locks available
+                    INSERT INTO license_usage(license_id, client_id, last_ka_received_at) VALUES (license_uuid, in_client_id, clock_timestamp());
+                    out_msg = 'SUCCESS';
+                ELSE
+                    out_msg = 'E_LIMIT_REACHED';
+                END IF;
+            ELSE
+                -- lock was already acquired
+                out_msg = 'E_ALREADY_ACQUIRED';
+            END IF;
+
+            COMMIT;
         END IF;
     END IF;
-
-    COMMIT;
 END
 $$;
 

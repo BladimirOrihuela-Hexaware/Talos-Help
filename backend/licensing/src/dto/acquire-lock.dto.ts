@@ -1,17 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, Length } from "class-validator";
+import { IsString, IsUUID, Length } from "class-validator";
 
 export class AcquireLockDto {
     @ApiProperty({
         description: "License UUID",
-        example: "<TODO insert example here>",
+        example: "51495a1b-d964-474b-85f9-8a2d712fccb5",
     })
-    @IsString()
+    @IsUUID(4)
     licenseId: string;
 
     @ApiProperty({
-        description: "Client UID that will acquire the lock",
-        example: "<TODO insert example here>"
+        description: "UID of the client that will acquire the lock"
     })
     @IsString()
     clientId: string;
