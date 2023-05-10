@@ -6,17 +6,19 @@ const Version = "latest";
 
 export class Pipeline {
     dev: boolean;
-    constructor() {
+    config: Config;
+    constructor(config: Config) {
         this.dev = process.env.NODE_ENV === "development";
+        this.config = config;
     }
 
-    async request(config: Config) {
+    async request() {
         try {
             const response = await axios({
-                method: config.method,
-                baseURL: this.dev ? `${BasePath}:${this.mapPort(config)}` : BasePath,
-                url: this.buildURL(config),
-                data: config.data,
+                method: this.config.method,
+                baseURL: this.dev ? `${BasePath}:${this.mapPort(this.config)}` : BasePath,
+                url: this.buildURL(),
+                data: this.config.data,
                 transformResponse: [
                     (data) => {
                         return data;
@@ -33,8 +35,8 @@ export class Pipeline {
         }
     }
 
-    private buildURL(config: Config): string {
-        const { service, id, route } = config;
+    private buildURL(): string {
+        const { service, id, route } = this.config;
         let url = `${service}/${Version}/${route}`; // features/latest/integrations
         if (id) return `${url}/${id}`; // features/latest/integration/genrocket
         return url;

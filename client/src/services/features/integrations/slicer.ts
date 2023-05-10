@@ -1,17 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { Integration } from "@atptalos/common";
+import type { Integration, BasicIntegration } from "@atptalos/common";
+import type { IntegrationTypes } from "./types";
 
 export type IntegrationState = {
     integrations: {
-        [name: string]: any;
+        [name: string]: IntegrationTypes;
     };
     loading: boolean;
     error?: Error;
+    fetched: boolean;
 };
 
 export const initialState: IntegrationState = {
     integrations: {},
     loading: false,
+    fetched: false,
 };
 
 export const integrationSlicer = createSlice({
@@ -31,6 +34,16 @@ export const integrationSlicer = createSlice({
         },
         loadCached: (state) => {
             state.loading = false;
+        },
+        loadIntegrations: (state, action: PayloadAction<BasicIntegration[]>) => {
+            const integrations = action.payload;
+            integrations.map((integration) => {
+                const name = integration.title.toLowerCase();
+                state.integrations[name] = integration;
+            });
+            state.loading = false;
+            state.error = undefined;
+            state.fetched = true;
         },
         onError: (state, action: PayloadAction<Error>) => {
             state.loading = false;

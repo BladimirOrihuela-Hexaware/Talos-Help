@@ -9,6 +9,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { StoreProvider } from "@services/store/provider";
 import Drawer from "./Drawer";
+import Box from "@mui/material/Box";
 
 const ScreenWrapper = (props: PropsWithChildren) => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -21,7 +22,11 @@ const ScreenWrapper = (props: PropsWithChildren) => {
         <ThemeProvider theme={theme}>
             <StoreProvider>
                 <AppBar toggleDrawer={handleDrawerToggle} />
-                <Drawer mobileOpen={mobileOpen} toggleDrawer={handleDrawerToggle} children={props.children} />
+                <Drawer
+                    mobileOpen={mobileOpen}
+                    toggleDrawer={handleDrawerToggle}
+                    children={<Box sx={{ padding: 2 }}>{props.children}</Box>}
+                />
             </StoreProvider>
         </ThemeProvider>
     );

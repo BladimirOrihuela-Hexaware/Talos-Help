@@ -3,3 +3,8 @@ export * from "./Button";
 export * from "./Text";
 export * from "./NestedListItem";
 export * from "./ListItem";
+export * from "./Card";
+export * from "./Code";
+export * from "./Subtitle";
+export * from "./Step";
+export * from "./Section";

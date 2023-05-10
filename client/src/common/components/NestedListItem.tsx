@@ -25,6 +25,17 @@ export const NestedListItem = (props: Props) => {
                     onClick={() => toggle(route)}
                     href={route}
                     LinkComponent={NextLink}
+                    sx={{
+                        "&.Mui-selected": {
+                            backgroundColor: "#00c6f754",
+                        },
+                        "&.Mui-focusVisible": {
+                            backgroundColor: "#00c6f754",
+                        },
+                        ":hover": {
+                            backgroundColor: "#00c6f724",
+                        },
+                    }}
                 >
                     <ListItemText disableTypography>
                         <Text>{text}</Text>
@@ -39,7 +50,18 @@ export const NestedListItem = (props: Props) => {
                         return (
                             <ListItemButton
                                 selected={selectedItem === _route}
-                                sx={{ pl: 4 }}
+                                sx={{
+                                    pl: 4,
+                                    "&.Mui-selected": {
+                                        backgroundColor: "#00c6f754",
+                                    },
+                                    "&.Mui-focusVisible": {
+                                        backgroundColor: "#00c6f754",
+                                    },
+                                    ":hover": {
+                                        backgroundColor: "#00c6f724",
+                                    },
+                                }}
                                 key={name}
                                 href={_route}
                                 LinkComponent={NextLink}
