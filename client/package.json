@@ -5,7 +5,8 @@
     "scripts": {
         "start": "next",
         "test": "jest",
-        "test:watch": "jest --watch"
+        "test:watch": "jest --watch",
+        "build": "next build"
     },
     "dependencies": {
         "@atptalos/common": "^1.0.11",
