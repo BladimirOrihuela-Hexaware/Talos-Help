@@ -30,7 +30,7 @@ CREATE TABLE license(
     CONSTRAINT license_fk_generator FOREIGN KEY(generator_id) REFERENCES generator(id)
 );
 COMMENT ON COLUMN license.max_clients IS 'max_clients >= -1 at all times. -1 means "unlimited clients"';
-COMMENT ON COLUMN license.client_timeout IS 'client_timeout >= 0 at all times. 0 means "no timeout"';
+COMMENT ON COLUMN license.client_timeout IS 'client_timeout >= 0 at all times. 0 means "no timeout". Minute is the unit for this value';
 CREATE INDEX license_active_idx ON license(active);
 CREATE INDEX license_id_idx ON license USING HASH (id); -- O(1) access
 

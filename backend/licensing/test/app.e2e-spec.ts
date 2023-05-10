@@ -6,11 +6,9 @@ import { LicensingModule } from "./../src/licensing.module";
 import { AuthenticationErrorCode } from "./../src/models/error-codes";
 import * as openpgp from "openpgp";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { SignatureGuard } from "src/signature-guard/signature.guard";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { GenerateLicenseDto } from "src/dto/generate-license.dto";
 import { LicenseGenerationResponse } from "src/models/license-generation.response";
-import { ReleaseLockDto } from "src/dto/release-lock.dto";
 import { AcquireLockDto } from "src/dto/acquire-lock.dto";
 
 describe("Licensing microservice (e2e)", () => {
@@ -19,7 +17,7 @@ describe("Licensing microservice (e2e)", () => {
     let talosPrivateKey: openpgp.PrivateKey;
     let prisma: PrismaClient;
 
-    let testLicenseId: string;
+    let license: {id: string; maxClients: number; clientTimeout: number};
     let generator: {id: string; email: string};
     let org: {id: string; name: string};
 
@@ -109,8 +107,8 @@ describe("Licensing microservice (e2e)", () => {
     describe("Admin requests", () => {
         it.each`
             reason                      |   b
-            ${"all fields ok 1"}        |   ${{projName: "Project", maxClients: 10, clientTimeout: 5, expiration: new Date(2050, 8, 15)}}
-            ${"all fields ok 2"}        |   ${{projName: "Project", maxClients: -1, clientTimeout: 0, expiration: new Date(2050, 8, 15)}}
+            ${"all fields ok 1"}        |   ${{projName: "Project", maxClients: -1, clientTimeout: 0, expiration: new Date(2050, 8, 15)}}
+            ${"all fields ok 2"}        |   ${{projName: "Project", maxClients: 3, clientTimeout: 5, expiration: new Date(2050, 8, 15)}}
         `("should generate a license ($reason)", async ({_, b}) => {
             const body: GenerateLicenseDto & {ts: number} = {
                 ts: Date.now(),
@@ -124,7 +122,10 @@ describe("Licensing microservice (e2e)", () => {
                 .expect(200);
             
             const resBody = res.body as LicenseGenerationResponse;
-            testLicenseId = resBody.licenseId;
+            license = {
+                id: resBody.licenseId,
+                ...b
+            };
             expect(resBody.licenseId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
         });
 
@@ -152,6 +153,7 @@ describe("Licensing microservice (e2e)", () => {
 
     describe("Desktop requests", () => {
         process.env.TALOS_PGP_PUBKEY = "testing.pgp.pub";
+        let jwts: string[] = [];
 
         it("should reject invalid PGP signature", async () => {
             const res = await request(httpServer)
@@ -202,39 +204,50 @@ describe("Licensing microservice (e2e)", () => {
         });
 
         it.each`
-            name                                        |   expectedStatusCode  |   mode
-            ${"successfully acquire a lock"}            |   ${200}              |   ${"ACQUIRE"}
-            ${"not acquire a lock already acquired"}    |   ${409}              |   ${"ACQUIRE"}
-            ${"successfully release a lock"}            |   ${200}              |   ${"RELEASE"}
-            ${"not release a lock already released"}    |   ${409}              |   ${"RELEASE"}
-        `("should $name", async ({_, expectedStatusCode, mode}) => {
-            const body: (ReleaseLockDto | AcquireLockDto) & {ts: number} = {
+            name                                        |   expectedStatusCode  |   clientId
+            ${"successfully acquire a lock 1"}          |   ${200}              |   ${"haha, super random machine id :P"}
+            ${"not acquire a lock already acquired"}    |   ${409}              |   ${"haha, super random machine id :P"}
+            ${"successfully acquire a lock 2"}          |   ${200}              |   ${"Another random machine id"}
+            ${"successfully acquire a lock 3"}          |   ${200}              |   ${"Yet another random machine id"}
+            ${"not acquire a lock if limit is reached"} |   ${409}              |   ${"And... another random machine id"}
+        `("should $name", async ({_, expectedStatusCode, clientId}) => {
+            const body: AcquireLockDto & {ts: number} = {
                 ts: Date.now(),
-                licenseId: testLicenseId,
-                clientId: "haha super random machine id :P"
+                licenseId: license.id,
+                clientId: clientId
             };
             const signedMsg = await openpgp.sign({
                 message: await openpgp.createCleartextMessage({text: JSON.stringify(body)}),
                 signingKeys: talosPrivateKey
             });
 
-            let req: request.SuperTest<request.Test> | request.Test = request(httpServer);
-            switch (mode) {
-                case "ACQUIRE":
-                    req = req.put("/desktop/lock");
-                    break;
-                case "RELEASE":
-                    req = req.delete("/desktop/lock");
-                    break;
-                default:
-                    fail("You have a typo in test 'mode'");
-            }
-            
-            const res = await req
+            const res = await request(httpServer)
+                .put("/desktop/lock")
                 .set("Content-Type", "text/plain")
                 .send(signedMsg)
                 .expect(expectedStatusCode);
-            console.log(res.body);
+            
+            if (!!res.body.jwt)
+                jwts.push(res.body.jwt);
+        });
+
+        it("should successfully release all acquired locks", async () => {
+            for (const jwt of jwts) {
+                const body = {
+                    ts: Date.now()
+                };
+                const signedMsg = await openpgp.sign({
+                    message: await openpgp.createCleartextMessage({text: JSON.stringify(body)}),
+                    signingKeys: talosPrivateKey
+                });
+
+                await request(httpServer)
+                    .delete("/desktop/lock")
+                    .set("Content-Type", "text/plain")
+                    .set("Authorization", `Bearer ${jwt}`)
+                    .send(signedMsg)
+                    .expect(200);
+            }
         });
     });
 });

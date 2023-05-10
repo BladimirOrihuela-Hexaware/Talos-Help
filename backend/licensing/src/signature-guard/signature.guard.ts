@@ -57,7 +57,7 @@ export class SignatureGuard implements CanActivate {
             const { verified, keyID } = verificationRes.signatures[0];
             await verified;
         } catch(e) {
-            console.error("🔥🔥🔥 Client sent invalid PGP signature. Is someone trying to fuck with us?"); // TODO log event + more info
+            console.warn("🔥🔥🔥 Client sent invalid PGP signature. Is someone trying to fuck with us?"); // TODO log event + more info
             throw new UnauthorizedException(this.IS_PROD ? undefined : "Invalid signature");
         }
 
@@ -66,7 +66,7 @@ export class SignatureGuard implements CanActivate {
         try {
             body = JSON.parse(pgpSignedMessage.getText() as string);
         } catch(e) {
-            console.error("🔥🔥🔥 Client sent invalid body but valid PGP signature. Has client's private PGP key been compromised?"); // TODO log event + more info
+            console.warn("🔥🔥🔥 Client sent invalid body but valid PGP signature. Has client's private PGP key been compromised?"); // TODO log event + more info
             throw new UnauthorizedException(this.IS_PROD ? undefined : "Invalid body");
         }
         if (typeof body.ts !== "number")

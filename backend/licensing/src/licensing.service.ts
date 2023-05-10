@@ -3,6 +3,9 @@ import { XMLParser } from "fast-xml-parser";
 import { AuthenticationErrorCode } from "./models/error-codes";
 import { PrismaClient, Prisma } from "@prisma/client";
 
+const spOutValues = ["SUCCESS", "E_LIMIT_REACHED", "E_EXPIRED", "E_ALREADY_ACQUIRED", "E_NOT_ACQUIRED"] as const;
+const spOutValuesMap = spOutValues.reduce((prev: Map<SPOut, boolean>, curr: SPOut) => prev.set(curr, true), new Map<SPOut, boolean>());
+export type SPOut = typeof spOutValues[number];
 
 @Injectable()
 export class LicensingService {
@@ -91,24 +94,25 @@ export class LicensingService {
      * @param licenseId license id
      * @param clientId client id that acquired the lock
      */
-    async acquireLock(licenseId: string, clientId: string) {
+    async acquireLock(licenseId: string, clientId: string): Promise<SPOut> {
         // TODO garbage-collect dead clients
 
         let outMsg: string;
         try {
-            await this.prisma.$executeRaw`CALL acquire_lock(${licenseId}::VARCHAR, ${clientId}::VARCHAR, ${outMsg}::VARCHAR);`;
-            // TODO handle message
-            console.log("out message", outMsg);
+            const res = await this.prisma.$queryRaw`CALL acquire_lock(${licenseId}::uuid, ${clientId}::VARCHAR, '');`;
+            outMsg = res[0].out_msg;
         } catch (e) {
             console.error("Error while trying to acquire a lock", e);
             throw e;
         }
 
         outMsg = outMsg.toUpperCase();
-        if (outMsg === "SUCCESS")
-            return;
+        if (!spOutValuesMap.has(outMsg as SPOut)) {
+            console.error(`Stored procedure didn't return something valid. Received: ${outMsg}. Expected one of: ${spOutValues}`);
+            throw new Error("Bad programming");
+        }
 
-        throw new Error(outMsg);
+        return outMsg as SPOut;
     }
 
     /**
@@ -120,22 +124,23 @@ export class LicensingService {
      * @param licenseId license id
      * @param clientId client id that will release the lock
      */
-    async releaseLock(licenseId: string, clientId: string) {
+    async releaseLock(licenseId: string, clientId: string): Promise<SPOut> {
         let outMsg: string;
         try {
-            await this.prisma.$executeRaw`CALL release_lock(${licenseId}::VARCHAR, ${clientId}::VARCHAR, ${outMsg}::VARCHAR);`;
-            // TODO handle message
-            console.log("out message", outMsg);
+            const res = await this.prisma.$queryRaw`CALL release_lock(${licenseId}::uuid, ${clientId}::VARCHAR, '');`;
+            outMsg = res[0].out_msg;
         } catch (e) {
             console.error("Error while trying to release a lock", e);
             throw e;
         }
 
         outMsg = outMsg.toUpperCase();
-        if (outMsg === "SUCCESS")
-            return;
+        if (!spOutValuesMap.has(outMsg as SPOut)) {
+            console.error(`Stored procedure didn't return something valid. Received: ${outMsg}. Expected one of: ${spOutValues}`);
+            throw new Error("Bad programming");
+        }
 
-        throw new Error(outMsg);
+        return outMsg as SPOut;
     }
 
     /**
