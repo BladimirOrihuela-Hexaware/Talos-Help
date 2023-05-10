@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectByValueData: Action = {
-    actionName:"Select By Value",
+export const TypeData: Action = {
+    actionName:"Type",
     description: 
-        "Select an option from a drop-down. Matches options based on their values.",
+        "This action sets the value of an input field, as though you typed it in.",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
         messageType:"information",
         description:
-			"The value is the string than appear on the html value attribute."
+			"You can use parameters from the Datasheet to execute iterations with different value, consult datasheets to know more about it."
     },
     parameters:[
 		{
@@ -28,12 +28,12 @@ export const SelectByValueData: Action = {
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select by value action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the Type action in the steps #3 and #4 of the test case",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectByValue.stmtc"
+            TCfile:"Type.stmtc"
         }
 };

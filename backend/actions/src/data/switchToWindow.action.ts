@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectByValueData: Action = {
-    actionName:"Select By Value",
+export const SwitchToWindowData: Action = {
+    actionName:"Switch To Window",
     description: 
-        "Select an option from a drop-down. Matches options based on their values.",
+        "This action allows you to switch to a new window in the current web page.",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
         messageType:"information",
         description:
-			"The value is the string than appear on the html value attribute."
+			"There are 2 ways to specify the window you want to move there are specifying the title or index of the target window in the value parameter."
     },
     parameters:[
 		{
@@ -18,22 +18,22 @@ export const SelectByValueData: Action = {
 			description:"Required"
 		},{
 			title:"Locator Type",
-			description:"Required",
+			description:"Not Required",
 		},{	
 			title:"Locator Value",
-			description:"Required",
+			description:"Not Required",
 		},{	
 			title:"Known Issue",
 			description:"Not Applicable"		
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select by value action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the switch to window action in the steps #3",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectByValue.stmtc"
+            TCfile:"SwitchToWindow.stmtc"
         }
 };

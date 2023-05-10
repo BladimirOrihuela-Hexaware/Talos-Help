@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectFrameData: Action = {
-    actionName:"Select Frame",
+export const SwitchToDefaultContentData: Action = {
+    actionName:"Switch To Default Content",
     description: 
-        "Switch to frame within the current window.",
+        "This action hands over the control to the first frame in the frame set.",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
         messageType:"information",
         description:
-			"The locator details are the ones to specify the frame you want to move."
+			"This action does not require an elememnt locator details, but you can specify the default content you want to switch and it works the same."
     },
     parameters:[
 		{
@@ -18,22 +18,22 @@ export const SelectFrameData: Action = {
 			description:"Not Required"
 		},{
 			title:"Locator Type",
-			description:"Required",
+			description:"Not Required",
 		},{	
 			title:"Locator Value",
-			description:"Required",
+			description:"Not Required",
 		},{	
 			title:"Known Issue",
 			description:"Not Applicable"		
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select frame action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the Switch To Default Content action in the steps #5 of the Test Case",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectFrame.stmtc"
+            TCfile:"SwitchToDefaultContent.stmtc"
         }
 };

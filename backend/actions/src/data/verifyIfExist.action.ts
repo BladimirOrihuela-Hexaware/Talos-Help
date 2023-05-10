@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectFrameData: Action = {
-    actionName:"Select Frame",
+export const VerifyIfExistData: Action = {
+    actionName:"Verify If Exist",
     description: 
-        "Switch to frame within the current window.",
+        "This action verifies if an object exists in the current webpage and it has also the functionality if the object specified does not exist you can use 'executenextSteps:numberOfSteps' to exclude the number of following steps to execute.",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
-        messageType:"information",
+        messageType:"Information",
         description:
-			"The locator details are the ones to specify the frame you want to move."
+			"You can use this action only in order to validate if the object exists."
     },
     parameters:[
 		{
@@ -28,12 +28,12 @@ export const SelectFrameData: Action = {
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select frame action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the verify if exist action in the step #3 and #5 of the test case.",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectFrame.stmtc"
+            TCfile:"VerifyIfExist.stmtc"
         }
 };

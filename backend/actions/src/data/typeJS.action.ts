@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectByValueData: Action = {
-    actionName:"Select By Value",
+export const TypeJSData: Action = {
+    actionName:"Type JS",
     description: 
-        "Select an option from a drop-down. Matches options based on their values.",
+        "This action take into consideration only the JavaScript from OnBlur and OnFocus event",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
-        messageType:"information",
+        messageType:"Warning",
         description:
-			"The value is the string than appear on the html value attribute."
+			"This action Doesn't support this object locator: Xpath"
     },
     parameters:[
 		{
@@ -24,16 +24,16 @@ export const SelectByValueData: Action = {
 			description:"Required",
 		},{	
 			title:"Known Issue",
-			description:"Not Applicable"		
+			description:"This option may not work with pages using javascript."		
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select by value action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the Type JS action in the steps #3 and #4 of the test case",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectByValue.stmtc"
+            TCfile:"TypeJS.stmtc"
         }
 };

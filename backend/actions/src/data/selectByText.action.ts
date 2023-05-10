@@ -1,6 +1,6 @@
 import { Action } from "../models/action.entity";
 
-export const selectByTextData: Action = {
+export const SelectByTextData: Action = {
     actionName:"Select By Text",
     description: 
         "Select an option from a drop-down. Matches options based on their visible text.",

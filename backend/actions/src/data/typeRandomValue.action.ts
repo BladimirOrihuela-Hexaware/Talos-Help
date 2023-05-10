@@ -1,16 +1,16 @@
 import { Action } from "../models/action.entity";
 
-export const SelectByValueData: Action = {
-    actionName:"Select By Value",
+export const TypeRandomValueData: Action = {
+    actionName:"Type Random Value",
     description: 
-        "Select an option from a drop-down. Matches options based on their values.",
+        "Type a random value using a specific option to specify the type of random value you need to use and the lenght of it separated by ':' EJ. RandomValueType:Lenght.",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
-        messageType:"information",
+        messageType:"Information",
         description:
-			"The value is the string than appear on the html value attribute."
+			"The types of ramdom values are alphabetic, alphanumeric, numeric, alphabet."
     },
     parameters:[
 		{
@@ -28,12 +28,12 @@ export const SelectByValueData: Action = {
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select by value action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the Type Random Value action.",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectByValue.stmtc"
+            TCfile:"TypeRandomValue.stmtc"
         }
 };

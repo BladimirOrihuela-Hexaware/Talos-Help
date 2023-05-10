@@ -31,11 +31,31 @@ export  {ResizeWindowData} from "./resizeWindow.action"
 export {RightClickData} from "./rightClick.action"
 export {RightClickOnObjectData} from "./rightClickOnObject.action"
 export {ScrollData} from "./scroll.action"
-export {selectByIndexData} from "./selectByIndex.action"
-export {selectByTextData} from "./selectByText.action"
-export {selectByValueData} from "./selectByValue.action"
-export {selectFrameData} from "./selectFrame.action"
-export {selectListByTextData} from "./selectListByText.action"
+export {SelectByIndexData} from "./selectByIndex.action"
+export {SelectByTextData} from "./selectByText.action"
+export {SelectByValueData} from "./selectByValue.action"
+export {SelectFrameData} from "./selectFrame.action"
+export {SelectListByTextData} from "./selectListByText.action"
+export {SubmitData} from "./submit.action"
+export {SwitchToDefaultContentData} from "./switchToDefaultContent.action"
+export {SwitchToFrameData} from "./switchToFrame.action"
+export {SwitchToWindowData} from "./switchToWindow.action"
+export {TypeData} from "./Type.action"
+export {TypeJSData} from "./TypeJS.action"
+export {TypeRandomValueData} from "./TypeRandomValue.action"
+export {TypeSecureData} from "./TypeSecure.action"
+export {UnCheckData} from "./Uncheck.action"
+export {VerifyIfExistData} from "./verifyIfExist.action"
+
+
+
+
+
+
+
+
+
+
 
 
 

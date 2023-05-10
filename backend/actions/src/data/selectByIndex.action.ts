@@ -1,6 +1,6 @@
 import { Action } from "../models/action.entity";
 
-export const selectByIndexData: Action = {
+export const SelectByIndexData: Action = {
     actionName:"Select By Index",
     description: 
         "This action select an option from a drop-down list starting from number 0. Matches options based on its index.",

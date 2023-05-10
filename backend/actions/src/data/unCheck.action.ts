@@ -1,21 +1,21 @@
 import { Action } from "../models/action.entity";
 
-export const SelectByValueData: Action = {
-    actionName:"Select By Value",
+export const UnCheckData: Action = {
+    actionName:"Un-check",
     description: 
-        "Select an option from a drop-down. Matches options based on their values.",
+        "This action uncheck a toggle-button (checkbox/radio).",
     isWeb: true,
-    isMobile: true,
-    isDesktop: true,
+    isMobile: false,
+    isDesktop: false,
 	message:{
-        messageType:"information",
+        messageType:"Information",
         description:
-			"The value is the string than appear on the html value attribute."
+			"Otherwise if the toggle-button is uncheck the action is going to check it."
     },
     parameters:[
 		{
 			title:"Value",
-			description:"Required"
+			description:"Not Required"
 		},{
 			title:"Locator Type",
 			description:"Required",
@@ -28,12 +28,12 @@ export const SelectByValueData: Action = {
 		}],
         example:{
             description:
-            "In the following image shows the example of how to use the select by value action in the steps #3 of the Test Case",
+            "In the following image shows the example of how to use the Uncheck action in the step #3 of the test case.",
             img:""
         },
         messageWithTCFile:{
             messageType:"successful",
             description:"For more information regarding this action, please download the following Talos TC file and import it to your TALOS Client.",
-            TCfile:"SelectByValue.stmtc"
+            TCfile:"UnCheck.stmtc"
         }
 };
