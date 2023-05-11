@@ -46,6 +46,12 @@ export {TypeRandomValueData} from "./TypeRandomValue.action"
 export {TypeSecureData} from "./TypeSecure.action"
 export {UnCheckData} from "./Uncheck.action"
 export {VerifyIfExistData} from "./verifyIfExist.action"
+export {VerifyPropertyData} from "./verifyProperty.action"
+export {VerifyTextData} from "./verifyText.action"
+export {VerifyTitleData} from "./verifyTitle.action"
+export {WaitData} from "./wait.action"
+export {WaitForPupUpData} from "./waitForPupUp.action"
+export {WindowsFocusData} from "./windowsFocus.action"
 
 
 

@@ -52,6 +52,12 @@ const actions: Actions = {
     typesecure: data.TypeSecureData,
     uncheck: data.UnCheckData,
     verifyifexist: data.VerifyIfExistData,
+    verifyproperty: data.VerifyPropertyData,
+    verifytext: data.VerifyTextData,
+    verifytitle: data.VerifyTitleData,
+    wait: data.WaitData,
+    waitforpopup: data.WaitForPupUpData,
+    windowsfocus: data.WindowsFocusData,
 };
 
 @Injectable()
